@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Starship : MonoBehaviour
 {    
-    private float speed = 15;
+    private float speed = 30;
     private int hullPoints;
     private int shieldPoints;
     private MousePosition2D mousePosition2D;
