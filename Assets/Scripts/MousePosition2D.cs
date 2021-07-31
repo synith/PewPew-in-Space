@@ -6,14 +6,17 @@ using UnityEngine;
 // Camera needs to be in orthonagal mode (2d mode)
 public class MousePosition2D : MonoBehaviour
 {
-    [SerializeField] private Camera mainCamera;
-    public Vector3 MouseWorldPosition { get; private set; }
 
+
+    // ENCAPSULATION
+    public static Vector3 MouseWorldPosition { get; private set; }
+
+    [SerializeField] private Camera mainCamera;
+    
     private void Update()
     {
         GetMousePosition();
     }
-
     private Vector3 GetMousePosition()
     {
         Vector3 _mouseWorldPosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);

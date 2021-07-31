@@ -4,18 +4,14 @@ using UnityEngine;
 
 public class Starship : MonoBehaviour
 {    
-    private float speed = 30;
-    private int hullPoints;
-    private int shieldPoints;
-    private MousePosition2D mousePosition2D;
+    [SerializeField] private float speed; // set speed in inspector
     private Vector3 moveDirection;
 
-    private void Awake()
-    {
-        mousePosition2D = GetComponent<MousePosition2D>();
-    }
+    // private int hullPoints;
+    // private int shieldPoints;    
     private void Update()
     {        
+        // ABSTRACTION
         MoveShip();
         RotateShip();
     }
@@ -26,7 +22,7 @@ public class Starship : MonoBehaviour
     }
     private void RotateShip()
     {
-        transform.LookAt(mousePosition2D.MouseWorldPosition);
+        transform.LookAt(MousePosition2D.MouseWorldPosition);
     }
     private Vector3 PlayerInput()
     {
