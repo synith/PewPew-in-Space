@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnShootLaser()
     {
-        GameObject laser = ObjectPool.SharedInstance.GetPooledObject();
+        GameObject laser = LaserPool.SharedInstance.GetPooledObject();
         if (laser != null)
         {
             laser.transform.SetPositionAndRotation(shootPoint.position, transform.rotation);
