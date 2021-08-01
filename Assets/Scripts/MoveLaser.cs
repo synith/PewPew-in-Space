@@ -4,21 +4,30 @@ using UnityEngine;
 
 public class MoveLaser : MonoBehaviour
 {
-    private float speed = 75f;
+    [SerializeField] private float speed;
+    [SerializeField] private float laserLifeTime;
     private Rigidbody rb;
 
-    private void Start()
+    private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        Move(Vector3.forward);
+    }
+    public void Move(Vector3 direction)
+    {        
+        rb.AddRelativeForce(direction * speed, ForceMode.VelocityChange);
     }
 
-    private void FixedUpdate()
-    {
+    public void StartLaserTimer()
+    {        
+        StartCoroutine(nameof(LaserLifeTimer));
         Move(Vector3.forward);
     }
 
-    private void Move(Vector3 direction)
+    IEnumerator LaserLifeTimer()
     {
-        rb.velocity = direction * speed;
+        yield return new WaitForSeconds(laserLifeTime);
+        gameObject.SetActive(false);
+        rb.velocity = Vector3.zero;
     }
 }
