@@ -12,6 +12,9 @@ public class PlayerController : MonoBehaviour
     private Vector3 moveDirection;
 
     private Rigidbody rb;
+
+    private bool isInRange;
+    private float minRange = 80f;
     
 
     // private int hullPoints;
@@ -52,13 +55,29 @@ public class PlayerController : MonoBehaviour
     }
     private void OnShootMissile()
     {
-        if (GetClosestEnemy() != null)
+        Transform target = GetClosestEnemy();
+        CheckDistance(target);
+
+        if (target != null && isInRange)
         {
             GameObject tempMissile;
             tempMissile = Instantiate(missilePrefab, transform.position, Quaternion.identity);
-            tempMissile.GetComponent<HomingMissile>().Fire(GetClosestEnemy());
+            tempMissile.GetComponent<HomingMissile>().Fire(target);
+        }
+        else
+        {
+            Debug.Log("No Target in Range");
         }
         
+    }
+    private void CheckDistance(Transform target)
+    {
+        float dist = Vector3.Distance(target.position, transform.position);
+
+        if (dist < minRange)
+            isInRange = true;
+        else
+            isInRange = false;
     }
     private void OnShield()
     {
