@@ -16,7 +16,8 @@ public class EnemyController : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        playerPosition = FindObjectOfType<PlayerController>().transform;
+        FindPlayer();        
+        InvokeRepeating(nameof(CheckDistance), 1f, 1f);
     }
     private void Update()
     {
@@ -24,11 +25,15 @@ public class EnemyController : MonoBehaviour
         RotateShip();
         MoveShip();        
     }
-    private void MoveShip()
+    private void FindPlayer()
     {
-        moveDirection = Vector3.forward;
-        rb.AddRelativeForce(moveDirection * speed);
+        playerPosition = FindObjectOfType<PlayerController>().transform;
     }
+    private void CheckDistance()
+    {
+        float dist = Vector3.Distance(playerPosition.position, transform.position);
+        Debug.Log("Enemy reads player at distance - " + dist);
+    }    
     private void RotateShip()
     {
         Vector3 lookDirection = (playerPosition.position - transform.position).normalized;
@@ -36,5 +41,10 @@ public class EnemyController : MonoBehaviour
 
         rb.MoveRotation(Quaternion.RotateTowards(transform.rotation, rotateShip, rotateSpeed));
     }
-
+    private void MoveShip()
+    {
+        moveDirection = Vector3.forward;
+        rb.AddRelativeForce(moveDirection * speed);
+    }
+    
 }
