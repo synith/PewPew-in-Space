@@ -238,8 +238,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca74143ef5affec459c29fd693d53919, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetTransform: {fileID: 0}
-  flySpeed: 10
-  turnSpeed: 1
-  missileLifeTimer: 5
-  missileFired: 0
+  flySpeed: 110
+  turnSpeed: 20
+  missileLifeTimer: 3

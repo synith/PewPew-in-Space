@@ -8,25 +8,30 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private float rotateSpeed;
     [SerializeField] private GameObject missilePrefab;
     [SerializeField] private Transform shootPoint;
+    [SerializeField] private float checkDistanceSeconds;
     private Transform playerPosition;
 
     private Vector3 moveDirection;
     private Rigidbody rb;
 
-    private bool inRange = false;
+    private bool isInRange;
+    private bool isTooClose;
+
     private float minRange = 60;
+    private float closeRange = 40;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        FindPlayer();        
-        InvokeRepeating(nameof(CheckDistance), 0.1f, 0.1f);
+        FindPlayer();
+        InvokeRepeating(nameof(CheckDistance), checkDistanceSeconds, checkDistanceSeconds);
+        InvokeRepeating(nameof(ShootLaser), 0.5f, 0.5f);
     }
     private void Update()
     {
         // ABSTRACTION
         RotateShip();
-        MoveShip();        
+        MoveShip();
     }
     private void FindPlayer()
     {
@@ -35,13 +40,32 @@ public class EnemyController : MonoBehaviour
     private void CheckDistance()
     {
         float dist = Vector3.Distance(playerPosition.position, transform.position);
-        // Debug.Log("Enemy reads player at distance - " + dist);
 
         if (dist < minRange)
-            inRange = true;
+            isInRange = true;
         else
-            inRange = false;
-    }    
+            isInRange = false;
+
+        if (dist < closeRange)
+            isTooClose = true;
+        else
+            isTooClose = false;
+    }
+    private void ShootPooledObject()
+    {
+        GameObject laser = LaserPool.SharedInstance.GetPooledObject();
+        if (laser != null)
+        {
+            laser.transform.SetPositionAndRotation(shootPoint.position, transform.rotation);
+            laser.SetActive(true);
+            laser.GetComponent<MoveLaser>().StartLaserTimer();
+        }
+    }
+    private void ShootLaser()
+    {
+        if (isInRange)
+            ShootPooledObject();
+    }
     private void RotateShip()
     {
         Vector3 lookDirection = (playerPosition.position - transform.position).normalized;
@@ -56,10 +80,18 @@ public class EnemyController : MonoBehaviour
     }
     private void SetDirection()
     {
-        if (!inRange)
+        if (!isInRange)
+        {
             moveDirection = Vector3.forward;
-        else
+        }
+        else if (isTooClose)
+        {
             moveDirection = Vector3.back;
+        }
+        else
+        {
+            moveDirection = Vector3.left;
+        }
     }
-    
+
 }

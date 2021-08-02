@@ -306,6 +306,7 @@ MonoBehaviour:
   rotateSpeed: 10
   missilePrefab: {fileID: 6049455911807177636, guid: 36f165df2beef8040b0f7de4ef852cff, type: 3}
   shootPoint: {fileID: 3344887596179263900}
+  checkDistanceSeconds: 0.1
 --- !u!54 &4201665641394840561
 Rigidbody:
   m_ObjectHideFlags: 0
