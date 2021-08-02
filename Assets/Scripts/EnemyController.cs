@@ -13,11 +13,14 @@ public class EnemyController : MonoBehaviour
     private Vector3 moveDirection;
     private Rigidbody rb;
 
+    private bool inRange = false;
+    private float minRange = 60;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         FindPlayer();        
-        InvokeRepeating(nameof(CheckDistance), 1f, 1f);
+        InvokeRepeating(nameof(CheckDistance), 0.1f, 0.1f);
     }
     private void Update()
     {
@@ -32,7 +35,12 @@ public class EnemyController : MonoBehaviour
     private void CheckDistance()
     {
         float dist = Vector3.Distance(playerPosition.position, transform.position);
-        Debug.Log("Enemy reads player at distance - " + dist);
+        // Debug.Log("Enemy reads player at distance - " + dist);
+
+        if (dist < minRange)
+            inRange = true;
+        else
+            inRange = false;
     }    
     private void RotateShip()
     {
@@ -43,8 +51,15 @@ public class EnemyController : MonoBehaviour
     }
     private void MoveShip()
     {
-        moveDirection = Vector3.forward;
+        SetDirection();
         rb.AddRelativeForce(moveDirection * speed);
+    }
+    private void SetDirection()
+    {
+        if (!inRange)
+            moveDirection = Vector3.forward;
+        else
+            moveDirection = Vector3.back;
     }
     
 }
