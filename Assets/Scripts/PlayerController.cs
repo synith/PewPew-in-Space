@@ -9,6 +9,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float rotateSpeed;
     [SerializeField] private GameObject missilePrefab;
     [SerializeField] private Transform shootPoint;
+    [SerializeField] private int maxHealth;
+ 
+
+    private HealthSystem healthSystem;
+
     private Vector3 moveDirection;
 
     private Rigidbody rb;
@@ -22,13 +27,18 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        HealthBar healthBar = GetComponentInChildren<HealthBar>();
+
         rb = GetComponent<Rigidbody>();
+        healthSystem = new HealthSystem(maxHealth);
+        
+        healthBar.SetUp(healthSystem);
     }
     private void Update()
     {        
         // ABSTRACTION
         MoveShip();
-        RotateShip();        
+        RotateShip();
     }
 
     private void MoveShip()
@@ -109,5 +119,28 @@ public class PlayerController : MonoBehaviour
         }
 
         return bestTarget;
+    }
+
+    private void CheckHealth()
+    {
+        if (healthSystem.GetHealth() <= 0)
+        {
+            gameObject.SetActive(false);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Laser"))
+        {
+            MoveLaser moveLaser = other.GetComponent<MoveLaser>();
+
+            healthSystem.Damage(moveLaser.LaserDamage);
+
+            other.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            other.gameObject.SetActive(false);
+
+            CheckHealth();            
+        }
     }
 }

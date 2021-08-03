@@ -11,19 +11,34 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private float checkDistanceSeconds;
     private Transform playerPosition;
 
+    private HealthSystem healthSystem;
+
     private Vector3 moveDirection;
     private Rigidbody rb;
 
     private bool isInRange;
     private bool isTooClose;
 
-    private float minRange = 60;
+    private float minRange = 80;
     private float closeRange = 40;
+
+    [SerializeField] private int maxHealth;
+
+    private void Awake()
+    {
+        FindPlayer();        
+    }
 
     private void Start()
     {
+        HealthBar healthBar = GetComponentInChildren<HealthBar>();
+        healthSystem = new HealthSystem(maxHealth);
+
         rb = GetComponent<Rigidbody>();
-        FindPlayer();
+        healthBar.SetUp(healthSystem);
+
+        
+
         InvokeRepeating(nameof(CheckDistance), checkDistanceSeconds, checkDistanceSeconds);
         InvokeRepeating(nameof(ShootLaser), 0.5f, 0.5f);
     }
@@ -91,6 +106,29 @@ public class EnemyController : MonoBehaviour
         else
         {
             moveDirection = Vector3.left;
+        }
+    }
+
+    private void CheckHealth()
+    {
+        if (healthSystem.GetHealth() <= 0)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Laser"))
+        {
+            MoveLaser moveLaser = other.GetComponent<MoveLaser>();
+
+            healthSystem.Damage(moveLaser.LaserDamage);
+
+            other.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            other.gameObject.SetActive(false);
+
+            CheckHealth();
         }
     }
 

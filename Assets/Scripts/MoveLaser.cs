@@ -4,12 +4,17 @@ using UnityEngine;
 
 public class MoveLaser : MonoBehaviour
 {
+    public int LaserDamage { get; private set; }
+   
     [SerializeField] private float speed;
     [SerializeField] private float laserLifeTime;
+    
     private Rigidbody rb;
 
     private void Awake()
     {
+        int _laserDamage = 10;
+        LaserDamage = _laserDamage;
         rb = GetComponent<Rigidbody>();
         Move(Vector3.forward);
     }
