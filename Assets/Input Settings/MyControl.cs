@@ -24,7 +24,7 @@ public class @MyControl : IInputActionCollection, IDisposable
                     ""id"": ""7ef496fe-9a2c-484d-9a28-fab603b7735f"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """"
+                    ""interactions"": ""Hold""
                 },
                 {
                     ""name"": ""Move"",

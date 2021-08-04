@@ -42,7 +42,7 @@ public class EnemyController : MonoBehaviour
         InvokeRepeating(nameof(CheckDistance), checkDistanceSeconds, checkDistanceSeconds);
         InvokeRepeating(nameof(ShootLaser), 0.5f, 0.5f);
     }
-    private void Update()
+    private void FixedUpdate()
     {
         // ABSTRACTION
         RotateShip();
@@ -127,6 +127,14 @@ public class EnemyController : MonoBehaviour
 
             other.GetComponent<Rigidbody>().velocity = Vector3.zero;
             other.gameObject.SetActive(false);
+
+            CheckHealth();
+        }
+        else if (other.CompareTag("Missile"))
+        {
+            HomingMissile homingMissile = other.GetComponent<HomingMissile>();
+            healthSystem.Damage(homingMissile.MissileDamage);
+            Destroy(other.gameObject);
 
             CheckHealth();
         }

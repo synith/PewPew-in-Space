@@ -275,7 +275,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30ee8e5034f83074aa4f8c29943d3b46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 100
+  speed: 1000
   rotateSpeed: 10
   missilePrefab: {fileID: 6049455911807177636, guid: 36f165df2beef8040b0f7de4ef852cff, type: 3}
   shootPoint: {fileID: 2536310947407641489}

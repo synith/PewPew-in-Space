@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class HomingMissile : MonoBehaviour
 {
+    public int MissileDamage { get; private set; }
+
     private Transform targetTransform;
     private Rigidbody missileRigidbody;
 
@@ -18,6 +20,9 @@ public class HomingMissile : MonoBehaviour
 
     void Start()
     {
+        int _missileDamage = 40;
+        MissileDamage = _missileDamage;
+
         if (!targetTransform)  // if no rocket target then ask for a target
             Debug.Log("Please set a target.");
 

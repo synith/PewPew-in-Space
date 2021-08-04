@@ -8,6 +8,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float speed; // set speed in inspector
     [SerializeField] private float rotateSpeed;
     [SerializeField] private GameObject missilePrefab;
+    [SerializeField] private GameObject shield;
+    [SerializeField] private Transform shieldTransform;
     [SerializeField] private Transform shootPoint;
     [SerializeField] private int maxHealth;
  
@@ -18,12 +20,19 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody rb;
 
+    private bool isShieldActive;
+
     private bool isInRange;
-    private float minRange = 80f;
-    
+    private float minRange = 100f;
+
 
     // private int hullPoints;
     // private int shieldPoints;
+
+    private void Awake()
+    {
+        isShieldActive = false;
+    }
 
     private void Start()
     {
@@ -34,11 +43,21 @@ public class PlayerController : MonoBehaviour
         
         healthBar.SetUp(healthSystem);
     }
-    private void Update()
-    {        
-        // ABSTRACTION
+    private void FixedUpdate()
+    {
         MoveShip();
         RotateShip();
+
+        shieldTransform.position = transform.position;
+
+        if (isShieldActive)
+        {
+            shield.SetActive(true);            
+        }
+        else
+        {
+            shield.SetActive(false);
+        }
     }
 
     private void MoveShip()
@@ -70,8 +89,9 @@ public class PlayerController : MonoBehaviour
 
         if (target != null && isInRange)
         {
+            Debug.Log("Firing at " + target);
             GameObject tempMissile;
-            tempMissile = Instantiate(missilePrefab, transform.position, Quaternion.identity);
+            tempMissile = Instantiate(missilePrefab, shootPoint.position, Quaternion.identity);
             tempMissile.GetComponent<HomingMissile>().Fire(target);
         }
         else
@@ -92,6 +112,8 @@ public class PlayerController : MonoBehaviour
     private void OnShield()
     {
         Debug.Log("Shield Activated!");
+        isShieldActive = true;
+        
     }
     private void RotateShip()
     {
