@@ -8,6 +8,8 @@ TagManager:
   - Laser
   - Door
   - Missile
+  - Hull
+  - Shield
   layers:
   - Default
   - TransparentFX

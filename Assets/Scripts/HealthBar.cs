@@ -7,8 +7,7 @@ public class HealthBar : MonoBehaviour
 {
     private Slider slider;
     private HealthSystem healthSystem;
-
-    private void Start()
+    private void Awake()
     {
         slider = GetComponent<Slider>();
     }
@@ -17,13 +16,13 @@ public class HealthBar : MonoBehaviour
         this.healthSystem = healthSystem;
 
         SetMaxHealth(healthSystem.GetHealth());
-        Debug.Log("Health Bar Initialized!");
         healthSystem.OnHealthChanged += HealthSystem_OnHealthChanged;
     }
 
     private void HealthSystem_OnHealthChanged(object sender, System.EventArgs e)
     {
         SetHealth(healthSystem.GetHealth());
+        Debug.Log("Set Health Event is Working!");
     }
 
     public void SetMaxHealth(int maxHealth)

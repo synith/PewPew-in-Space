@@ -4,15 +4,15 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
-{    
+{
     [SerializeField] private float speed; // set speed in inspector
     [SerializeField] private float rotateSpeed;
     [SerializeField] private GameObject missilePrefab;
     [SerializeField] private GameObject shield;
-    [SerializeField] private Transform shieldTransform;
     [SerializeField] private Transform shootPoint;
     [SerializeField] private int maxHealth;
- 
+    [SerializeField] private HealthBar healthBar;
+
 
     private HealthSystem healthSystem;
 
@@ -32,15 +32,14 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         isShieldActive = false;
+        healthSystem = new HealthSystem(maxHealth);
     }
 
     private void Start()
-    {
-        HealthBar healthBar = GetComponentInChildren<HealthBar>();
-
+    { 
         rb = GetComponent<Rigidbody>();
-        healthSystem = new HealthSystem(maxHealth);
         
+
         healthBar.SetUp(healthSystem);
     }
     private void FixedUpdate()
@@ -48,11 +47,9 @@ public class PlayerController : MonoBehaviour
         MoveShip();
         RotateShip();
 
-        shieldTransform.position = transform.position;
-
         if (isShieldActive)
         {
-            shield.SetActive(true);            
+            shield.SetActive(true);
         }
         else
         {
@@ -98,22 +95,26 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("No Target in Range");
         }
-        
+
     }
     private void CheckDistance(Transform target)
     {
-        float dist = Vector3.Distance(target.position, transform.position);
+        if (target != null)
+        {
+            float dist = Vector3.Distance(target.position, transform.position);
 
-        if (dist < minRange)
-            isInRange = true;
-        else
-            isInRange = false;
+            if (dist < minRange)
+                isInRange = true;
+            else
+                isInRange = false;
+        }
+
     }
     private void OnShield()
     {
         Debug.Log("Shield Activated!");
         isShieldActive = true;
-        
+
     }
     private void RotateShip()
     {
@@ -122,7 +123,7 @@ public class PlayerController : MonoBehaviour
 
         rb.MoveRotation(Quaternion.RotateTowards(transform.rotation, rotateShip, rotateSpeed));
     }
-    
+
     private Transform GetClosestEnemy()
     {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
@@ -162,7 +163,7 @@ public class PlayerController : MonoBehaviour
             other.GetComponent<Rigidbody>().velocity = Vector3.zero;
             other.gameObject.SetActive(false);
 
-            CheckHealth();            
+            CheckHealth();
         }
     }
 }
