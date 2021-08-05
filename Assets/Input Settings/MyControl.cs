@@ -20,11 +20,11 @@ public class @MyControl : IInputActionCollection, IDisposable
             ""actions"": [
                 {
                     ""name"": ""Shield"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""7ef496fe-9a2c-484d-9a28-fab603b7735f"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": ""Axis"",
                     ""processors"": """",
-                    ""interactions"": ""Hold""
+                    ""interactions"": """"
                 },
                 {
                     ""name"": ""Move"",

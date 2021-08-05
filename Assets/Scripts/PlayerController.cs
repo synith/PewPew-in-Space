@@ -47,13 +47,13 @@ public class PlayerController : MonoBehaviour
         MoveShip();
         RotateShip();
 
-        if (isShieldActive)
+        if (isShieldActive && !shield.activeInHierarchy)
         {
-            shield.SetActive(true);
+            shield.SetActive(isShieldActive);
         }
-        else
+        else if (!isShieldActive && shield.activeInHierarchy)
         {
-            shield.SetActive(false);
+            shield.SetActive(isShieldActive);
         }
     }
 
@@ -110,11 +110,18 @@ public class PlayerController : MonoBehaviour
         }
 
     }
-    private void OnShield()
+    private void OnShield(InputValue input)
     {
-        Debug.Log("Shield Activated!");
-        isShieldActive = true;
-
+        if (input.Get<float>() > 0.9f)
+        {
+            isShieldActive = true;
+            gameObject.tag = "Shield";
+        }
+        else
+        {
+            isShieldActive = false;
+            gameObject.tag = "Player";
+        } 
     }
     private void RotateShip()
     {
@@ -154,7 +161,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Laser"))
+        if (other.CompareTag("Laser") && gameObject.CompareTag("Player"))
         {
             MoveLaser moveLaser = other.GetComponent<MoveLaser>();
 
@@ -164,6 +171,13 @@ public class PlayerController : MonoBehaviour
             other.gameObject.SetActive(false);
 
             CheckHealth();
+        }
+        else if (other.CompareTag("Laser") && gameObject.CompareTag("Shield"))
+        {            
+            other.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            other.gameObject.SetActive(false);
+
+            // do damage to shield
         }
     }
 }

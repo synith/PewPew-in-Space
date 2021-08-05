@@ -22,7 +22,6 @@ public class HealthBar : MonoBehaviour
     private void HealthSystem_OnHealthChanged(object sender, System.EventArgs e)
     {
         SetHealth(healthSystem.GetHealth());
-        Debug.Log("Set Health Event is Working!");
     }
 
     public void SetMaxHealth(int maxHealth)
