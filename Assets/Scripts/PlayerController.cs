@@ -66,6 +66,7 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 inputVec = input.Get<Vector2>();
         moveDirection = new Vector3(inputVec.x, 0, inputVec.y);
+        Debug.Log(moveDirection);
     }
 
     private void OnShootLaser()

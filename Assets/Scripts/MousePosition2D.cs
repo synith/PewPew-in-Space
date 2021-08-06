@@ -24,7 +24,7 @@ public class MousePosition2D : MonoBehaviour
     {
         mousePosition = controls.actions["MousePosition"].ReadValue<Vector2>();
         Vector3 _mouseWorldPosition = mainCamera.ScreenToWorldPoint(mousePosition);
-        _mouseWorldPosition.y = 15f;
+        _mouseWorldPosition.y = 0f;
         MouseWorldPosition = _mouseWorldPosition;
         return MouseWorldPosition;
     }
