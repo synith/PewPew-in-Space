@@ -460,7 +460,7 @@ GameObject:
   - component: {fileID: 2715278403144615423}
   m_Layer: 0
   m_Name: Fighter
-  m_TagString: Player
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -517,7 +517,7 @@ MonoBehaviour:
   healthBar: {fileID: 2715278401977481818}
   speed: 2000
   rotateSpeed: 10
-  maxHealth: 100
+  maxHealth: 50
   checkDistanceSeconds: 0.5
 --- !u!1 &2715278403303255213
 GameObject:
