@@ -30,14 +30,20 @@ public class EnemyController : Starship
     private void CheckDistance()
     {
         float dist = Vector3.Distance(playerPosition.position, transform.position);
-        if (dist < minRange) isInRange = true;
-        else isInRange = false;
-        if (dist < closeRange) isTooClose = true;
-        else isTooClose = false;
+
+        if (dist < minRange)
+            isInRange = true;
+        else
+            isInRange = false;
+        if (dist < closeRange) 
+            isTooClose = true;
+        else
+            isTooClose = false;
     }
     private void ShootLaser()
     {
-        if (isInRange) ShootPooledLaser();
+        if (isInRange && !GameManager.Instance.gameOver)
+            ShootPooledLaser();
     }    
     private void SetDirection()
     {
