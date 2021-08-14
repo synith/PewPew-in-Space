@@ -1,8 +1,12 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 public class PlayerController : Starship
 {
-    [SerializeField] private readonly float missileRange = 100f; 
+    [SerializeField] private float missileRange = 100f;
+    [SerializeField] private float missileCoolDown = 2f;
+    bool isMissileReady = true;
 
     private void OnMove(InputValue input)
     {
@@ -28,19 +32,29 @@ public class PlayerController : Starship
     }
     private void OnShootMissile()
     {
-        Transform target = GetClosestEnemy();
-        CheckRange(target);
-        if (target != null && isInRange)
+        if (isMissileReady)
         {
-            Debug.Log("Firing at " + target.name);
-            GameObject tempMissile;
-            tempMissile = Instantiate(missilePrefab, shootPoint.position, Quaternion.identity);
-            tempMissile.GetComponent<HomingMissile>().Fire(target);
+            Transform target = GetClosestEnemy();
+            CheckRange(target);
+            if (target != null && isInRange)
+            {
+                Debug.Log("Firing at " + target.name);
+                GameObject tempMissile;
+                tempMissile = Instantiate(missilePrefab, shootPoint.position, Quaternion.identity);
+                tempMissile.GetComponent<HomingMissile>().Fire(target);
+                isMissileReady = false;
+                StartCoroutine(nameof(MissileCoolDown));
+            }
+            else
+            {
+                Debug.Log("No Target in Range");
+                // play sad sound
+            }
         }
         else
         {
-            Debug.Log("No Target in Range");
-            // play sad sound
+            Debug.Log("Missile on Cooldown");
+            // play other sad sound
         }
     }
     private Transform GetClosestEnemy()
@@ -93,6 +107,11 @@ public class PlayerController : Starship
         {
             ReturnToPool(other);
             // do damage to shield
-        }        
-    }    
+        }
+    }
+    IEnumerator MissileCoolDown()
+    {
+        yield return new WaitForSeconds(missileCoolDown);
+        isMissileReady = true;
+    }
 }
