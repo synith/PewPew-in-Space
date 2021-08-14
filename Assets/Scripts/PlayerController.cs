@@ -6,7 +6,9 @@ public class PlayerController : Starship
 {
     [SerializeField] private float missileRange = 100f;
     [SerializeField] private float missileCoolDown = 2f;
-    bool isMissileReady = true;
+    private bool isMissileReady = true;
+    [SerializeField] private int missileCount = 3;
+
 
     private void OnMove(InputValue input)
     {
@@ -32,16 +34,20 @@ public class PlayerController : Starship
     }
     private void OnShootMissile()
     {
-        if (isMissileReady)
+        if (isMissileReady && missileCount > 0)
         {
             Transform target = GetClosestEnemy();
             CheckRange(target);
             if (target != null && isInRange)
             {
-                Debug.Log("Firing at " + target.name);
+                missileCount--;
+
+                Debug.Log("Firing at " + target.name + ". Missiles Left:" + missileCount);
                 GameObject tempMissile;
                 tempMissile = Instantiate(missilePrefab, shootPoint.position, Quaternion.identity);
                 tempMissile.GetComponent<HomingMissile>().Fire(target);
+
+                
                 isMissileReady = false;
                 StartCoroutine(nameof(MissileCoolDown));
             }
@@ -51,10 +57,14 @@ public class PlayerController : Starship
                 // play sad sound
             }
         }
-        else
+        else if (!isMissileReady)
         {
             Debug.Log("Missile on Cooldown");
             // play other sad sound
+        }
+        else if (missileCount < 1)
+        {
+            Debug.Log("Out of missiles");
         }
     }
     private Transform GetClosestEnemy()
