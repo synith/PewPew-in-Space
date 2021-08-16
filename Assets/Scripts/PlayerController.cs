@@ -10,6 +10,10 @@ public class PlayerController : Starship
     [SerializeField] private int missileCount = 3;
 
 
+    private void OnPause()
+    {
+        GameManager.Instance.gamePaused = true;
+    }
     private void OnMove(InputValue input)
     {
         Vector2 inputVec = input.Get<Vector2>();
@@ -30,41 +34,45 @@ public class PlayerController : Starship
     }
     private void OnShootLaser()
     {
-        ShootPooledLaser();
+        if (!GameManager.Instance.gamePaused)
+            ShootPooledLaser();
     }
     private void OnShootMissile()
     {
-        if (isMissileReady && missileCount > 0)
+        if (!GameManager.Instance.gamePaused)
         {
-            Transform target = GetClosestEnemy();
-            CheckRange(target);
-            if (target != null && isInRange)
+            if (isMissileReady && missileCount > 0)
             {
-                missileCount--;
+                Transform target = GetClosestEnemy();
+                CheckRange(target);
+                if (target != null && isInRange)
+                {
+                    missileCount--;
 
-                Debug.Log("Firing at " + target.name + ". Missiles Left:" + missileCount);
-                GameObject tempMissile;
-                tempMissile = Instantiate(missilePrefab, shootPoint.position, Quaternion.identity);
-                tempMissile.GetComponent<HomingMissile>().Fire(target);
+                    Debug.Log("Firing at " + target.name + ". Missiles Left:" + missileCount);
+                    GameObject tempMissile;
+                    tempMissile = Instantiate(missilePrefab, shootPoint.position, Quaternion.identity);
+                    tempMissile.GetComponent<HomingMissile>().Fire(target);
 
-                
-                isMissileReady = false;
-                StartCoroutine(nameof(MissileCoolDown));
+
+                    isMissileReady = false;
+                    StartCoroutine(nameof(MissileCoolDown));
+                }
+                else
+                {
+                    Debug.Log("No Target in Range");
+                    // play sad sound
+                }
             }
-            else
+            else if (!isMissileReady)
             {
-                Debug.Log("No Target in Range");
-                // play sad sound
+                Debug.Log("Missile on Cooldown");
+                // play other sad sound
             }
-        }
-        else if (!isMissileReady)
-        {
-            Debug.Log("Missile on Cooldown");
-            // play other sad sound
-        }
-        else if (missileCount < 1)
-        {
-            Debug.Log("Out of missiles");
+            else if (missileCount < 1)
+            {
+                Debug.Log("Out of missiles");
+            }
         }
     }
     private Transform GetClosestEnemy()
