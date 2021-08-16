@@ -44,12 +44,15 @@ public abstract class Starship : MonoBehaviour
         {
             shield.SetActive(isShieldActive);
         }
-    }    
+    }
     protected abstract Vector3 GetLookDirection();
     private void RotateShip(Vector3 lookDirection)
     {
-        Quaternion rotateShip = Quaternion.LookRotation(lookDirection);
-        rb.MoveRotation(Quaternion.RotateTowards(transform.rotation, rotateShip, rotateSpeed));
+        if (lookDirection != Vector3.zero)
+        {
+            Quaternion rotateShip = Quaternion.LookRotation(lookDirection);
+            rb.MoveRotation(Quaternion.RotateTowards(transform.rotation, rotateShip, rotateSpeed));
+        }
     }
     protected virtual void MoveShip()
     {
@@ -64,7 +67,7 @@ public abstract class Starship : MonoBehaviour
             laser.SetActive(true);
             laser.GetComponent<MoveLaser>().StartLaserTimer();
         }
-    }    
+    }
     protected virtual void CheckDeath()
     {
         if (healthSystem.GetHealth() <= 0) Destroy(gameObject);
@@ -86,7 +89,7 @@ public abstract class Starship : MonoBehaviour
         healthSystem.Damage(moveLaser.LaserDamage);
         ReturnToPool(other);
         CheckDeath();
-    }    
+    }
     protected void MissileHit(Collider other)
     {
         HomingMissile homingMissile = other.GetComponent<HomingMissile>();
