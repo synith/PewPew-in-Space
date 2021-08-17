@@ -10,6 +10,15 @@ public class SpawnDoorTrigger : MonoBehaviour
     private bool door4Open;
     private bool door5Open;
 
+    private void Start()
+    {
+        door1Open = false;
+        door2Open = false;
+        door3Open = false;
+        door4Open = false;
+        door5Open = false;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Door"))
