@@ -50,6 +50,7 @@ public class PlayerController : Starship
                     missileCount--;
 
                     Debug.Log("Firing at " + target.name + ". Missiles Left:" + missileCount);
+                    GameManager.Instance.ShowStatus("Missiles Left:" + missileCount);
                     GameObject tempMissile;
                     tempMissile = Instantiate(missilePrefab, shootPoint.position, Quaternion.identity);
                     tempMissile.GetComponent<HomingMissile>().Fire(target);
@@ -61,17 +62,20 @@ public class PlayerController : Starship
                 else
                 {
                     Debug.Log("No Target in Range");
+                    GameManager.Instance.ShowStatus("No Target in Range");
                     // play sad sound
                 }
             }
             else if (!isMissileReady)
             {
                 Debug.Log("Missile on Cooldown");
+                GameManager.Instance.ShowStatus("Missile on Cooldown");
                 // play other sad sound
             }
             else if (missileCount < 1)
             {
                 Debug.Log("Out of missiles");
+                GameManager.Instance.ShowStatus("Out of missiles");
             }
         }
     }

@@ -22,6 +22,14 @@ public class EnemyController : Starship
         SetDirection();
         base.MoveShip();
     }
+    protected override void CheckDeath()
+    {
+        if (healthSystem.GetHealth() <= 0)
+        {
+            Destroy(gameObject);
+            GameManager.Instance.AddPoint(5);
+        }
+    }
     protected override Vector3 GetLookDirection()
     {
         Vector3 lookDirection = (playerPosition.position - transform.position).normalized;

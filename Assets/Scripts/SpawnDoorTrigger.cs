@@ -33,31 +33,31 @@ public class SpawnDoorTrigger : MonoBehaviour
         {
             room = 1;
             door1Open = true;
-            GameManager.Instance.spawnManager.SpawnFighter(room);
+            GameManager.Instance.SpawnManager.SpawnFighter(room);
         }
         else if (other.name == "Door2" && !door2Open)
         {
             room = 2;
             door2Open = true;
-            GameManager.Instance.spawnManager.SpawnFighter(room);
+            GameManager.Instance.SpawnManager.SpawnFighter(room);
         }
         else if (other.name == "Door3" && !door3Open)
         {
             room = 3;
             door3Open = true;
-            GameManager.Instance.spawnManager.SpawnFighter(room);
+            GameManager.Instance.SpawnManager.SpawnFighter(room);
         }
         else if (other.name == "Door4" && !door4Open)
         {
             room = 4;
             door4Open = true;
-            GameManager.Instance.spawnManager.SpawnFighter(room);
+            GameManager.Instance.SpawnManager.SpawnFighter(room);
         }
         else if (other.name == "Door5" && !door5Open)
         {
             room = 5;
             door5Open = true;
-            GameManager.Instance.spawnManager.SpawnFighter(room);
+            GameManager.Instance.SpawnManager.SpawnFighter(room);
         }
     }
 }
