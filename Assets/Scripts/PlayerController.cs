@@ -12,7 +12,7 @@ public class PlayerController : Starship
 
     private void OnPause()
     {
-        GameManager.Instance.gamePaused = true;
+        GameManager.Instance.GamePaused = true;
     }
     private void OnMove(InputValue input)
     {
@@ -34,12 +34,12 @@ public class PlayerController : Starship
     }
     private void OnShootLaser()
     {
-        if (!GameManager.Instance.gamePaused)
+        if (!GameManager.Instance.GamePaused)
             ShootPooledLaser();
     }
     private void OnShootMissile()
     {
-        if (!GameManager.Instance.gamePaused)
+        if (!GameManager.Instance.GamePaused)
         {
             if (isMissileReady && missileCount > 0)
             {
@@ -116,7 +116,7 @@ public class PlayerController : Starship
         if (healthSystem.GetHealth() <= 0)
         {
             gameObject.SetActive(false);
-            GameManager.Instance.gameOver = true;
+            GameManager.Instance.GameOver = true;
         }
     }
     protected override void OnTriggerEnter(Collider other)

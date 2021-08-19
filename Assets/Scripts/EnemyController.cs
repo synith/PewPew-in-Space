@@ -50,7 +50,7 @@ public class EnemyController : Starship
     }
     private void ShootLaser()
     {
-        if (isInRange && !GameManager.Instance.gameOver)
+        if (isInRange && !GameManager.Instance.GameOver)
             ShootPooledLaser();
     }    
     private void SetDirection()

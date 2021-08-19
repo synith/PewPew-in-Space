@@ -4,74 +4,74 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
 
+// Game Manager singleton that tracks game states as well as holding public score methods and a public reference to the Spawn Manager class
+
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance { get; private set; }
 
+    // ENCAPSULATION
+    public static GameManager Instance { get; private set; }
     public SpawnManager SpawnManager { get; private set; }
 
-    private int currentScore;
+    // game states
+    private bool gameStarted = false;
+    private bool gamePaused = false;
+    private bool gameOver = false;
 
-    // game state
-    public bool gameStarted;
-    public bool gamePaused;
-    public bool gameOver;
+    // ENCAPSULATION
+    public bool GameStarted { get { return gameStarted; } set { gameStarted = value; } }
+    public bool GamePaused { get { return gamePaused; } set { gamePaused = value; } }
+    public bool GameOver { get { return gameOver; } set { gameOver = value; } }    
 
+    // text boxes during gameplay
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI highScoreText;
     [SerializeField] private TextMeshProUGUI statusText;
 
+    private int currentScore;
 
     private void Awake()
     {
-        if (Instance != null)
+        if (Instance != null)  // check to make sure there is not another instance of this class
         {
             Destroy(gameObject);
             return;
         }
         Instance = this;
 
-        // Anything else in Awake goes after this
         SpawnManager = FindObjectOfType<SpawnManager>();
         currentScore = 0;
     }
-
-    private void Start()
+    private void Start() // initialize score textboxes using score data
     {
         if (ScoreManager.Instance != null)
         {
-            scoreText.text = SetScore();
-            highScoreText.text = SetHighScore();
+            scoreText.text = SetScore(); // ABSTRACTION
+            highScoreText.text = SetHighScore(); // ABSTRACTION
         }
     }
-
-    // public methods go here
-
-    public void ShowStatus(string status)
+    public void ShowStatus(string status) // sets textbox active, assigns string parameter and starts a cooldown before text dissapears
     {
         statusText.text = status;
         statusText.gameObject.SetActive(true);
         StartCoroutine(nameof(StatusCooldown));
     }
-
-    public void AddPoint(int point)
+    public void AddPoint(int point) // add points to current score and check to see if new highscore
     {
         currentScore += point;
         scoreText.text = SetScore();
         CheckHighScore();
     }
-
-    private IEnumerator StatusCooldown()
+    private IEnumerator StatusCooldown() // 4 second cooldown on status text before dissapearing
     {
         yield return new WaitForSeconds(4);
         statusText.gameObject.SetActive(false);
     }
-
-    private void CheckHighScore()
+    private void CheckHighScore() // if current score is greater than highscore then the current score is the new highscore, and highscore data should be saved
     {
         if (ScoreManager.Instance != null)
         {
-            if (currentScore > ScoreManager.Instance.HighScore)
+            if (currentScore > ScoreManager.Instance.HighScore) 
             {
                 ScoreManager.Instance.HighScore = currentScore;
                 ScoreManager.Instance.HighScorePlayer = ScoreManager.Instance.PlayerName;
@@ -80,7 +80,7 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    private string SetHighScore()
+    private string SetHighScore() // creates a string using highscore data from score manager
     {
         string highScore;
         if (ScoreManager.Instance != null)
@@ -94,7 +94,7 @@ public class GameManager : MonoBehaviour
             return highScore;
         }
     }
-    private string SetScore()
+    private string SetScore() // creates a string using current games score and player name
     {
         string score;
         if (ScoreManager.Instance != null)
