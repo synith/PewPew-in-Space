@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LaserPool : MonoBehaviour
+public class LaserPool : MonoBehaviour // object pool to preserve performance
 {
     public static LaserPool SharedInstance;
     [SerializeField] private List<GameObject> pooledObjects;
@@ -13,7 +13,7 @@ public class LaserPool : MonoBehaviour
     {
         SharedInstance = this;
     }
-    private void Start()
+    private void Start() // on start instantiate a list of game objects and set them to inactive
     {
         pooledObjects = new List<GameObject>();
         GameObject tmp;
@@ -24,7 +24,7 @@ public class LaserPool : MonoBehaviour
             pooledObjects.Add(tmp);
         }
     }
-    public GameObject GetPooledObject()
+    public GameObject GetPooledObject() // return the first available object from the pool
     {
         for (int i = 0; i < amountToPool; i++)
         {

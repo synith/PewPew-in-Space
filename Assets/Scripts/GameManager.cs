@@ -80,7 +80,7 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    private string SetHighScore() // creates a string using highscore data from score manager
+    private string SetHighScore() // returns a string using highscore data from score manager
     {
         string highScore;
         if (ScoreManager.Instance != null)
@@ -94,7 +94,7 @@ public class GameManager : MonoBehaviour
             return highScore;
         }
     }
-    private string SetScore() // creates a string using current games score and player name
+    private string SetScore() // returns a string using current games score and player name
     {
         string score;
         if (ScoreManager.Instance != null)

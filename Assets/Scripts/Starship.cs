@@ -1,6 +1,7 @@
 using UnityEngine;
 public abstract class Starship : MonoBehaviour
 {
+    // Polymorphic variables to be used by children classes
     [SerializeField] protected GameObject missilePrefab;
     [SerializeField] protected GameObject shield;
     [SerializeField] protected Transform shootPoint;
@@ -18,23 +19,23 @@ public abstract class Starship : MonoBehaviour
     protected bool isInRange;
     protected bool isShieldActive;
 
-    protected virtual void Awake()
+    protected virtual void Awake() // on script load initialize health system using starship's max health
     {
         isShieldActive = false;
         healthSystem = new HealthSystem(maxHealth);
     }
-    protected virtual void Start()
+    protected virtual void Start() // on start initialize health bar using starship's health system
     {
         rb = GetComponent<Rigidbody>();
         healthBar.SetUp(healthSystem);
     }
-    private void FixedUpdate()
+    private void FixedUpdate() // rotates ship to look direction, moves ship, checks to see if shield is active
     {
-        RotateShip(GetLookDirection());
-        MoveShip();
-        ShieldActivation();
+        RotateShip(GetLookDirection()); // ABSTRACTION
+        MoveShip(); // ABSTRACTION
+        ShieldActivation(); // ABSTRACTION
     }
-    private void ShieldActivation()
+    private void ShieldActivation() // sets shield object active only when shield bool is true
     {
         if (isShieldActive && !shield.activeInHierarchy)
         {
@@ -45,8 +46,8 @@ public abstract class Starship : MonoBehaviour
             shield.SetActive(isShieldActive);
         }
     }
-    protected abstract Vector3 GetLookDirection();
-    private void RotateShip(Vector3 lookDirection)
+    protected abstract Vector3 GetLookDirection(); // POLYMORPHISM
+    private void RotateShip(Vector3 lookDirection) // Rotates starship to face the lookDirection vector
     {
         if (lookDirection != Vector3.zero)
         {
@@ -54,11 +55,11 @@ public abstract class Starship : MonoBehaviour
             rb.MoveRotation(Quaternion.RotateTowards(transform.rotation, rotateShip, rotateSpeed));
         }
     }
-    protected virtual void MoveShip()
+    protected virtual void MoveShip() // moves starship in movement direction at a rate determined by starship's speed
     {
         rb.AddRelativeForce(moveDirection * speed);
     }
-    protected void ShootPooledLaser()
+    protected void ShootPooledLaser() // takes a laser from the pool, places it at the starship's shoot point, sets lasers velocity and starts laser life timer
     {
         GameObject laser = LaserPool.SharedInstance.GetPooledObject();
         if (laser != null)
@@ -68,11 +69,11 @@ public abstract class Starship : MonoBehaviour
             laser.GetComponent<MoveLaser>().StartLaserTimer();
         }
     }
-    protected virtual void CheckDeath()
+    protected virtual void CheckDeath() // destroys starship if health is 0
     {
         if (healthSystem.GetHealth() <= 0) Destroy(gameObject);
     }
-    protected virtual void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other) // checks to see if laser or missile hit starship
     {
         if (other.CompareTag("Laser"))
         {
@@ -83,21 +84,21 @@ public abstract class Starship : MonoBehaviour
             MissileHit(other);
         }
     }
-    protected void LaserHit(Collider other)
+    protected void LaserHit(Collider other) // does damage to starship's health system based on laser damage
     {
         MoveLaser moveLaser = other.GetComponent<MoveLaser>();
         healthSystem.Damage(moveLaser.LaserDamage);
         ReturnToPool(other);
         CheckDeath();
     }
-    protected void MissileHit(Collider other)
+    protected void MissileHit(Collider other) // does damage to starship's health system based on missile damage
     {
         HomingMissile homingMissile = other.GetComponent<HomingMissile>();
         healthSystem.Damage(homingMissile.MissileDamage);
         Destroy(other.gameObject);
         CheckDeath();
     }
-    protected void ReturnToPool(Collider other)
+    protected void ReturnToPool(Collider other) // zero's velocity and disables object in active scene, returning the object to the pool
     {
         other.GetComponent<Rigidbody>().velocity = Vector3.zero;
         other.gameObject.SetActive(false);

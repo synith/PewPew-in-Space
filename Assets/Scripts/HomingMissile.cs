@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class HomingMissile : MonoBehaviour
 {
-    public int MissileDamage { get; private set; }
+    public int MissileDamage { get { return _missileDamage; } private set { _missileDamage = value; } }
+
+    [Header("Rocket Settings")]
+    [SerializeField] private int _missileDamage = 40;
+    [SerializeField] private float flySpeed = 110f;
+    [SerializeField] private float turnSpeed = 20f;
+    [SerializeField] private float missileLifeTimer = 3f;
 
     private Transform targetTransform;
     private Rigidbody missileRigidbody;
-
-    [Header("Rocket Settings")]
-    [SerializeField] private float flySpeed = 10f;
-    [SerializeField] private float turnSpeed = 1f;
-    [SerializeField] private float missileLifeTimer = 5f;
 
     private bool missileFired;
 
@@ -20,16 +21,13 @@ public class HomingMissile : MonoBehaviour
 
     void Start()
     {
-        int _missileDamage = 40;
-        MissileDamage = _missileDamage;
-
         if (!targetTransform)  // if no rocket target then ask for a target
             Debug.Log("Please set a target.");
 
         missileRigidbody = GetComponent<Rigidbody>();
         missileTransform = GetComponent<Transform>();
     }
-    public void Fire(Transform newTarget)
+    public void Fire(Transform newTarget) // fires missile at target, destroying missile after set amount of time
     {
         targetTransform = newTarget;
         missileFired = true;
@@ -39,10 +37,10 @@ public class HomingMissile : MonoBehaviour
     {
         if (!missileRigidbody) // if no missile rigid body do nothing
             return;
-        if (missileFired && targetTransform != null)
+        if (missileFired && targetTransform != null) // if missile has been fired and there is a target, then rotate and move towards target
         {
             Quaternion missileTargetRotation = Quaternion.LookRotation(targetTransform.position - missileTransform.position).normalized; // new quaternion made of a vector3 that takes the target position minus the missile position
-            missileRigidbody.MoveRotation(Quaternion.RotateTowards(missileTransform.rotation, missileTargetRotation, turnSpeed)); // rotate player from current rotation towards enemy at turn speed
+            missileRigidbody.MoveRotation(Quaternion.RotateTowards(missileTransform.rotation, missileTargetRotation, turnSpeed)); // rotate object from current rotation towards target rotation at turn speed
             missileRigidbody.velocity = (missileTransform.forward * flySpeed); // add force forward
         }
     }

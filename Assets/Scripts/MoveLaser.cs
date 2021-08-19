@@ -4,32 +4,31 @@ using UnityEngine;
 
 public class MoveLaser : MonoBehaviour
 {
-    public int LaserDamage { get; private set; }
-   
-    [SerializeField] private float speed;
-    [SerializeField] private float laserLifeTime;
+    public int LaserDamage { get { return _laserDamage; } private set { _laserDamage = value; } } // ENCAPSULATION
+
+    [SerializeField] private int _laserDamage = 10;   
+    [SerializeField] private float speed = 180;
+    [SerializeField] private float laserLifeTime = 2f;
     
     private Rigidbody rb;
 
-    private void Awake()
+    private void Awake() // starts moving laser forward as soon as script is loaded
     {
-        int _laserDamage = 10;
-        LaserDamage = _laserDamage;
         rb = GetComponent<Rigidbody>();
-        Move(Vector3.forward);
+        Move(Vector3.forward); // ABSTRACTION
     }
-    public void Move(Vector3 direction)
+    public void Move(Vector3 direction) // sets rigidbody's velocity in passed direction
     {        
         rb.AddRelativeForce(direction * speed, ForceMode.VelocityChange);
     }
 
-    public void StartLaserTimer()
+    public void StartLaserTimer() // starts a timer to deactivate and return laser to laser pool
     {        
         StartCoroutine(nameof(LaserLifeTimer));
         Move(Vector3.forward);
     }
 
-    IEnumerator LaserLifeTimer()
+    IEnumerator LaserLifeTimer() // after set amount of time laser returns to pool
     {
         yield return new WaitForSeconds(laserLifeTime);
         gameObject.SetActive(false);

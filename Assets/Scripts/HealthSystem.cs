@@ -1,6 +1,6 @@
 using System;
 
-public class HealthSystem
+public class HealthSystem // health system class that stores max health and current health information
 {
     public event EventHandler OnHealthChanged;
 
@@ -13,24 +13,24 @@ public class HealthSystem
         health = healthMax;
     }
 
-    public int GetHealth()
+    public int GetHealth() // returns current health
     {
         return health;
     }
-    public void Damage(int damageAmount)
+    public void Damage(int damageAmount) // reduces current health by damage amount
     {
         health -= damageAmount;
         if (health < 0)
             health = 0;
 
-        OnHealthChanged?.Invoke(this, EventArgs.Empty);
+        OnHealthChanged?.Invoke(this, EventArgs.Empty); // invokes health changed event so healthbar can be updated
     }
-    public void Heal(int healAmount)
+    public void Heal(int healAmount) // increases current health by heal amount
     {
         health += healAmount;
         if (health > healthMax)
             health = healthMax;
 
-        OnHealthChanged?.Invoke(this, EventArgs.Empty);
+        OnHealthChanged?.Invoke(this, EventArgs.Empty); // invokes health changed event so healthbar can be updated
     }
 }

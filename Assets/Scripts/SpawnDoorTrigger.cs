@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class SpawnDoorTrigger : MonoBehaviour
 {
+    // bools flagging whether door has been opened or not
     private bool door1Open;
     private bool door2Open;
     private bool door3Open;
     private bool door4Open;
     private bool door5Open;
 
-    private void Start()
+    private void Start() // set all doors to closed on start
     {
         door1Open = false;
         door2Open = false;
@@ -19,14 +20,14 @@ public class SpawnDoorTrigger : MonoBehaviour
         door5Open = false;
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other) // checking if player triggered door
     {
         if (other.CompareTag("Door"))
         {
             CheckDoor(other);
         }
     }
-    private void CheckDoor(Collider other)
+    private void CheckDoor(Collider other) // checks which numbered door player entered and spawns fighters in the appropriate room
     {
         int room;
         if (other.name == "Door1" && !door1Open)

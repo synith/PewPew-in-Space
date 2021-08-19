@@ -6,10 +6,8 @@ using UnityEngine.InputSystem;
 // This script grabs the mouse position from the camera and converts it to "world space" (where stuff in the unity editor happens)
 // Camera needs to be in orthonagal mode (2d mode)
 public class MousePosition2D : MonoBehaviour
-{
-
-    // ENCAPSULATION
-    public static Vector3 MouseWorldPosition { get; private set; }
+{    
+    public static Vector3 MouseWorldPosition { get; private set; } // ENCAPSULATION
     private Vector2 mousePosition; 
 
     [SerializeField] private PlayerInput controls; // use inspector to reference player's PlayerInput component
@@ -20,7 +18,7 @@ public class MousePosition2D : MonoBehaviour
     {
         GetMousePosition();
     }
-    private Vector3 GetMousePosition()
+    private Vector3 GetMousePosition() // takes mouse position and converts to x and z coordinates in world space
     {
         mousePosition = controls.actions["MousePosition"].ReadValue<Vector2>();
         Vector3 _mouseWorldPosition = mainCamera.ScreenToWorldPoint(mousePosition);
