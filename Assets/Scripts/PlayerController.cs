@@ -25,6 +25,7 @@ public class PlayerController : Starship // INHERITANCE
         {
             isShieldActive = true;
             gameObject.tag = "Shield";
+            StartCoroutine(shield.GetComponent<Shield>().ShieldRegen());
         }
         else
         {
@@ -34,7 +35,7 @@ public class PlayerController : Starship // INHERITANCE
     }
     private void OnShootLaser() // shoots a pooled laser when shoot laser key is pressed
     {
-        if (!GameManager.Instance.GamePaused)
+        if (!GameManager.Instance.GamePaused && !isShieldActive)
             ShootPooledLaser();
     }
     private void OnShootMissile() // shoots a missile when shoot missile key is pressed

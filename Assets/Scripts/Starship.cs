@@ -18,6 +18,7 @@ public abstract class Starship : MonoBehaviour
 
     protected bool isInRange;
     protected bool isShieldActive;
+    public bool shieldDown;
 
     protected virtual void Awake() // on script load initialize health system using starship's max health
     {
@@ -37,11 +38,11 @@ public abstract class Starship : MonoBehaviour
     }
     private void ShieldActivation() // sets shield object active only when shield bool is true
     {
-        if (isShieldActive && !shield.activeInHierarchy)
+        if (!shieldDown && isShieldActive && !shield.activeInHierarchy)
         {
             shield.SetActive(isShieldActive);
         }
-        else if (!isShieldActive && shield.activeInHierarchy)
+        else if (shieldDown || (!isShieldActive && shield.activeInHierarchy))
         {
             shield.SetActive(isShieldActive);
         }
