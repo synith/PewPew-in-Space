@@ -7,8 +7,11 @@ public class PlayerController : Starship // INHERITANCE
     [SerializeField] private float missileRange = 100f;
     [SerializeField] private float missileCoolDown = 2f;
     private bool isMissileReady = true;
+    private bool isMissileArmed = false;
     [SerializeField] private int missileCount = 3;
 
+    [SerializeField] private AudioClip noAmmoSound;
+    [SerializeField] private AudioClip errorSound;
 
     private void OnPause() // if pause key is pressed sets game state to paused
     {
@@ -50,10 +53,13 @@ public class PlayerController : Starship // INHERITANCE
                 {
                     missileCount--;
 
+                    isMissileArmed = false;
+                    StartCoroutine(nameof(MissileArmed));
+
                     Debug.Log("Firing at " + target.name + ". Missiles Left:" + missileCount);
                     GameManager.Instance.ShowStatus("Missiles Left:" + missileCount); // updates status text with remaining missile count
                     GameObject tempMissile;
-                    tempMissile = Instantiate(missilePrefab, shootPoint.position, Quaternion.identity);
+                    tempMissile = Instantiate(missilePrefab, shootPoint.position, transform.rotation);
                     tempMissile.GetComponent<HomingMissile>().Fire(target);
 
 
@@ -65,6 +71,7 @@ public class PlayerController : Starship // INHERITANCE
                     Debug.Log("No Target in Range");
                     GameManager.Instance.ShowStatus("No Target in Range"); // updates status text informing player there is no target in range
                     // play sad sound
+                    starshipAudio.PlayOneShot(errorSound, 0.1f);
                 }
             }
             else if (!isMissileReady)
@@ -72,11 +79,13 @@ public class PlayerController : Starship // INHERITANCE
                 Debug.Log("Missile on Cooldown");
                 GameManager.Instance.ShowStatus("Missile on Cooldown"); // updates status text informing player missile is still on cooldown
                 // play other sad sound
+                starshipAudio.PlayOneShot(errorSound, 0.1f);
             }
             else if (missileCount < 1)
             {
                 Debug.Log("Out of missiles");
                 GameManager.Instance.ShowStatus("Out of missiles"); // updates status text informing player there are no more missiles to fire
+                starshipAudio.PlayOneShot(noAmmoSound, 0.1f);
             }
         }
     }
@@ -112,6 +121,11 @@ public class PlayerController : Starship // INHERITANCE
         yield return new WaitForSeconds(missileCoolDown);
         isMissileReady = true;
     }
+    private IEnumerator MissileArmed()
+    {
+        yield return new WaitForSeconds(0.5f);
+        isMissileArmed = true;
+    }
     protected override Vector3 GetLookDirection() // gets mouse position relative to player and sets this as the look direction
     {
         Vector3 lookDirection = (MousePosition2D.MouseWorldPosition - transform.position).normalized;
@@ -121,6 +135,7 @@ public class PlayerController : Starship // INHERITANCE
     {
         if (healthSystem.GetHealth() <= 0)
         {
+            SoundManager.Instance.PlaySound(deathSound);
             gameObject.SetActive(false);
             GameManager.Instance.GameOver = true;
         }
@@ -129,7 +144,13 @@ public class PlayerController : Starship // INHERITANCE
     {
         if (other.CompareTag("Laser") && gameObject.CompareTag("Player")) // if player hit by laser with no shield, then do laser damage
         {
+            starshipAudio.PlayOneShot(hullHitSound, 0.1f);
             LaserHit(other);
+        }
+        else if (other.CompareTag("Missile") && gameObject.CompareTag("Player") && isMissileArmed)
+        {
+            starshipAudio.PlayOneShot(missileHitSound, 0.1f);
+            MissileHit(other);
         }
         else if (other.CompareTag("Laser") && gameObject.CompareTag("Shield")) // if shield up, simply return the laser to the pool
         {

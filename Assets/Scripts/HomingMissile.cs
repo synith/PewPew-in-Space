@@ -19,18 +19,29 @@ public class HomingMissile : MonoBehaviour
 
     private Transform missileTransform;
 
+    private AudioSource missileAudio;
+    
+    [SerializeField] private AudioClip fireSound;
+
+    private void Awake()
+    {
+        missileAudio = GetComponent<AudioSource>();
+        missileAudio.volume = SoundManager.Instance.sfxVolume;
+    }
+
     void Start()
     {
         if (!targetTransform)  // if no rocket target then ask for a target
             Debug.Log("Please set a target.");
 
         missileRigidbody = GetComponent<Rigidbody>();
-        missileTransform = GetComponent<Transform>();
+        missileTransform = GetComponent<Transform>();        
     }
     public void Fire(Transform newTarget) // fires missile at target, destroying missile after set amount of time
     {
         targetTransform = newTarget;
         missileFired = true;
+        missileAudio.PlayOneShot(fireSound, 0.1f);
         Destroy(gameObject, missileLifeTimer);
     }
     private void FixedUpdate()

@@ -26,6 +26,7 @@ public class EnemyController : Starship // INHERITANCE
     {
         if (healthSystem.GetHealth() <= 0)
         {
+            SoundManager.Instance.PlaySound(deathSound);
             Destroy(gameObject);
             GameManager.Instance.AddPoint(5);
         }

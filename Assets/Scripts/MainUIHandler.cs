@@ -9,6 +9,17 @@ public class MainUIHandler : MonoBehaviour
     [SerializeField] private GameObject PauseScreen;
     [SerializeField] private GameObject GameOverScreen;
 
+    [SerializeField] private AudioClip menuSound;
+    [SerializeField] private AudioClip pauseSound;
+    [SerializeField] private AudioClip resumeSound;
+
+    private AudioSource mainAudio;
+
+    private void Awake()
+    {
+        mainAudio = GetComponent<AudioSource>();
+        mainAudio.volume = SoundManager.Instance.sfxVolume;
+    }
     private void Start() // on game start set pause and game over screens / gamestates to false
     {
         PauseScreen.SetActive(false);
@@ -21,6 +32,7 @@ public class MainUIHandler : MonoBehaviour
     {
         if (GameManager.Instance.GamePaused && !PauseScreen.activeInHierarchy)
         {
+            mainAudio.PlayOneShot(pauseSound, 0.1f);
             Time.timeScale = 0; // pauses game
             PauseScreen.SetActive(true);
         }
@@ -34,6 +46,7 @@ public class MainUIHandler : MonoBehaviour
     {
         if (GameManager.Instance.GamePaused)
         {
+            mainAudio.PlayOneShot(resumeSound, 0.1f);
             PauseScreen.SetActive(false);
             Time.timeScale = 1; // unpauses game
             GameManager.Instance.GamePaused = false;
@@ -42,6 +55,7 @@ public class MainUIHandler : MonoBehaviour
     public void GoToMenu() // menu button - load menu scene
     {
         ResumeGame();
+        SoundManager.Instance.StopMusic();
         SceneManager.LoadScene(0);
     }
     public void RestartGame() // restart button - reload current scene

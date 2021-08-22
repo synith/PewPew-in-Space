@@ -20,10 +20,18 @@ public abstract class Starship : MonoBehaviour
     protected bool isShieldActive;
     public bool shieldDown;
 
+    [SerializeField] protected AudioClip hullHitSound;
+    [SerializeField] protected AudioClip missileHitSound;
+    [SerializeField] protected AudioClip deathSound;
+    protected AudioSource starshipAudio;
+
     protected virtual void Awake() // on script load initialize health system using starship's max health
     {
         isShieldActive = false;
         healthSystem = new HealthSystem(maxHealth);
+
+        starshipAudio = GetComponent<AudioSource>();
+        starshipAudio.volume = SoundManager.Instance.sfxVolume;
     }
     protected virtual void Start() // on start initialize health bar using starship's health system
     {
@@ -78,11 +86,14 @@ public abstract class Starship : MonoBehaviour
     {
         if (other.CompareTag("Laser"))
         {
+            starshipAudio.PlayOneShot(hullHitSound, 0.1f);
             LaserHit(other);
+            
         }
         else if (other.CompareTag("Missile"))
         {
-            MissileHit(other);
+            starshipAudio.PlayOneShot(missileHitSound, 0.1f);
+            MissileHit(other);            
         }
     }
     protected void LaserHit(Collider other) // does damage to starship's health system based on laser damage
