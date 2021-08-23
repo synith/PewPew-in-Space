@@ -516,7 +516,7 @@ MonoBehaviour:
   shield: {fileID: 2715278402264594041}
   shootPoint: {fileID: 2715278402953780690}
   healthBar: {fileID: 2715278401977481818}
-  speed: 2000
+  speed: 3000
   rotateSpeed: 10
   maxHealth: 50
   shieldDown: 0

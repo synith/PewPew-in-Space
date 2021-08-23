@@ -128,7 +128,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _laserDamage: 10
   speed: 180
-  laserLifeTime: 2
+  laserLifeTime: 1.5
   laserClip: {fileID: 8300000, guid: 213ae8c657276b44dbcc0747dc1d83e2, type: 3}
 --- !u!82 &3336034973494988042
 AudioSource:

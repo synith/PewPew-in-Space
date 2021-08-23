@@ -4,7 +4,7 @@ public class EnemyController : Starship // INHERITANCE
     [SerializeField] private float checkDistanceSeconds;
     private Transform playerPosition;
     private bool isTooClose;
-    private readonly float minRange = 80;
+    private readonly float minRange = 120;
     private readonly float closeRange = 40;
     protected override void Awake() // find player's position on script loading
     {
