@@ -1,5 +1,7 @@
 # OOP-theory-demo: PewPew in Space
 
+<h3><a href="https://synith.itch.io/pewpew-in-space">Play Game</a></h3>
+
 This mini game is a demonstration of my knowledge regarding the four pillars of Object-Oriented Programming.
 
 
