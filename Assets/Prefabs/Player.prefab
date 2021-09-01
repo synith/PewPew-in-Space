@@ -156,6 +156,8 @@ MonoBehaviour:
   missileRange: 100
   missileCoolDown: 2
   missileCount: 3
+  noAmmoSound: {fileID: 0}
+  errorSound: {fileID: 0}
 --- !u!114 &1031823722
 MonoBehaviour:
   m_ObjectHideFlags: 0

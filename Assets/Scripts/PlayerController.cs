@@ -56,7 +56,6 @@ public class PlayerController : Starship // INHERITANCE
                     isMissileArmed = false;
                     StartCoroutine(nameof(MissileArmed));
 
-                    Debug.Log("Firing at " + target.name + ". Missiles Left:" + missileCount);
                     GameManager.Instance.ShowStatus("Missiles Left:" + missileCount); // updates status text with remaining missile count
                     GameObject tempMissile;
                     tempMissile = Instantiate(missilePrefab, shootPoint.position, transform.rotation);
@@ -68,7 +67,6 @@ public class PlayerController : Starship // INHERITANCE
                 }
                 else
                 {
-                    Debug.Log("No Target in Range");
                     GameManager.Instance.ShowStatus("No Target in Range"); // updates status text informing player there is no target in range
                     // play sad sound
                     starshipAudio.PlayOneShot(errorSound, 0.1f);

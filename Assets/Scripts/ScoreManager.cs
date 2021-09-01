@@ -7,14 +7,10 @@ public class ScoreManager : MonoBehaviour
 {
     public static ScoreManager Instance { get; private set; } // ENCAPSULATION
 
-    private string playerName;
-    private string highScorePlayer;
-    private int highScore;
-
     // ENCAPSULATION
-    public string PlayerName { get { return playerName; } set { playerName = value; } }
-    public string HighScorePlayer { get { return highScorePlayer; } set { highScorePlayer = value; } }
-    public int HighScore { get { return highScore; } set { highScore = value; } }
+    public string PlayerName { get; set; }
+    public string HighScorePlayer { get; set; }
+    public int HighScore { get; set; }
 
     private void Awake() // check if this class exists already, and destroys this instance of the class if it does
     {

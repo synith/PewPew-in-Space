@@ -13,15 +13,10 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     public SpawnManager SpawnManager { get; private set; }
 
-    // game states
-    private bool gameStarted = false;
-    private bool gamePaused = false;
-    private bool gameOver = false;
-
     // ENCAPSULATION
-    public bool GameStarted { get { return gameStarted; } set { gameStarted = value; } }
-    public bool GamePaused { get { return gamePaused; } set { gamePaused = value; } }
-    public bool GameOver { get { return gameOver; } set { gameOver = value; } }    
+    public bool GameStarted { get; set; }
+    public bool GamePaused { get; set; }
+    public bool GameOver { get; set; }
 
     // text boxes during gameplay
     [SerializeField] private TextMeshProUGUI scoreText;
@@ -71,7 +66,7 @@ public class GameManager : MonoBehaviour
     {
         if (ScoreManager.Instance != null)
         {
-            if (currentScore > ScoreManager.Instance.HighScore) 
+            if (currentScore > ScoreManager.Instance.HighScore)
             {
                 ScoreManager.Instance.HighScore = currentScore;
                 ScoreManager.Instance.HighScorePlayer = ScoreManager.Instance.PlayerName;

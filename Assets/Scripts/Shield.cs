@@ -72,11 +72,15 @@ public class Shield : MonoBehaviour
     }
     public IEnumerator ShieldRegen() // after a set amount of time heal the shield to full, set the shield as up and tag the player so the shield blocks lasers for them
     {
-        yield return new WaitForSeconds(shieldRegenTime);
-        shieldAudioSource.PlayOneShot(shieldRegenClip, 0.1f);
-        healthSystem.Heal(maxShieldHealth);
-        SetShieldTransparency();
-        starship.shieldDown = false;
-        starship.gameObject.tag = "Shield";
+        yield return new WaitForSeconds(shieldRegenTime);        
+
+        if(gameObject != null && starship.shieldDown)
+        {
+            healthSystem.Heal(maxShieldHealth);
+            shieldAudioSource.PlayOneShot(shieldRegenClip, 0.1f);
+            starship.gameObject.tag = "Shield";
+            SetShieldTransparency();
+            starship.shieldDown = false;
+        }            
     }
 }
