@@ -47,30 +47,7 @@ public class PlayerController : Starship // INHERITANCE
         {
             if (isMissileReady && missileCount > 0) // only shoot missile if missile count is greater than 0
             {
-                Transform target = GetClosestEnemy(); 
-                CheckRange(target);
-                if (target != null && isInRange) // only shoots missile if there is a target, and the target is in range
-                {
-                    missileCount--;
-
-                    isMissileArmed = false;
-                    StartCoroutine(nameof(MissileArmed));
-
-                    GameManager.Instance.ShowStatus("Missiles Left:" + missileCount); // updates status text with remaining missile count
-                    GameObject tempMissile;
-                    tempMissile = Instantiate(missilePrefab, shootPoint.position, transform.rotation);
-                    tempMissile.GetComponent<HomingMissile>().Fire(target);
-
-
-                    isMissileReady = false;
-                    StartCoroutine(nameof(MissileCoolDown)); // starts missile cooldown preventing missile from being fired again until after cooldown
-                }
-                else
-                {
-                    GameManager.Instance.ShowStatus("No Target in Range"); // updates status text informing player there is no target in range
-                    // play sad sound
-                    starshipAudio.PlayOneShot(errorSound, 0.1f);
-                }
+                FireMissileAtTarget();
             }
             else if (!isMissileReady)
             {
@@ -87,6 +64,45 @@ public class PlayerController : Starship // INHERITANCE
             }
         }
     }
+
+    private void FireMissileAtTarget()
+    {
+        Transform target = GetClosestEnemy();
+        CheckRange(target);
+        if (target != null && isInRange) // only shoots missile if there is a target, and the target is in range
+        {
+            FireMissile(target);
+        }
+        else
+        {
+            TargetNotInRange();
+        }
+    }
+
+    private void FireMissile(Transform target)
+    {
+        missileCount--;
+
+        isMissileArmed = false;
+        StartCoroutine(nameof(MissileArmed));
+
+        GameManager.Instance.ShowStatus("Missiles Left:" + missileCount); // updates status text with remaining missile count
+        GameObject tempMissile;
+        tempMissile = Instantiate(missilePrefab, shootPoint.position, transform.rotation);
+        tempMissile.GetComponent<HomingMissile>().Fire(target);
+
+
+        isMissileReady = false;
+        StartCoroutine(nameof(MissileCoolDown)); // starts missile cooldown preventing missile from being fired again until after cooldown
+    }
+
+    private void TargetNotInRange()
+    {
+        GameManager.Instance.ShowStatus("No Target in Range"); // updates status text informing player there is no target in range
+                                                               // play sad sound
+        starshipAudio.PlayOneShot(errorSound, 0.1f);
+    }
+
     private Transform GetClosestEnemy() // creates an array of objects that have the enemy tag and compares their distance to see which is closest, returns this enemy as the closest target
     {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
