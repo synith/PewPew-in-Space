@@ -8,6 +8,7 @@ public class MainUIHandler : MonoBehaviour
     // UI screens for pause and game over
     [SerializeField] private GameObject PauseScreen;
     [SerializeField] private GameObject GameOverScreen;
+    [SerializeField] private GameObject GameWonScreen;
 
     [SerializeField] private AudioClip menuSound;
     [SerializeField] private AudioClip pauseSound;
@@ -39,6 +40,10 @@ public class MainUIHandler : MonoBehaviour
         if (GameManager.Instance.GameOver && !GameOverScreen.activeInHierarchy)
         {
             GameOverScreen.SetActive(true);
+        }
+        if (GameManager.Instance.GameWon && !GameWonScreen.activeInHierarchy) 
+        {
+            GameWonScreen.SetActive(true);
         }
     }
 

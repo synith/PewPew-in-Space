@@ -29,6 +29,12 @@ public class EnemyController : Starship // INHERITANCE
             SoundManager.Instance.PlaySound(deathSound);
             Destroy(gameObject);
             GameManager.Instance.AddPoint(5);
+            GameManager.Instance.EnemiesDefeatedCount++;
+
+            if (GameManager.Instance.EnemiesDefeatedCount >= GameManager.Instance.TotalEnemies)
+            {
+                GameManager.Instance.GameWon = true;
+            }
         }
     }
     protected override Vector3 GetLookDirection() // sets look direction towards player's position

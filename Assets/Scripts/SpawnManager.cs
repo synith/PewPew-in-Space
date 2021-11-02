@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-    // 
     private readonly Transform[][] Rooms = new Transform[5][];
 
     // array of spawn positions for each room
@@ -22,12 +21,22 @@ public class SpawnManager : MonoBehaviour
         Rooms[1] = spawnPositionsRoom1;
         Rooms[2] = spawnPositionsRoom2;
         Rooms[3] = spawnPositionsRoom3;
-        Rooms[4] = spawnPositionsRoom4;
+        Rooms[4] = spawnPositionsRoom4;        
+    }
+
+    private void CountAllEnemies()
+    {
+        foreach (Transform[] transforms in Rooms)
+        {
+            GameManager.Instance.TotalEnemies += transforms.Length;
+            Debug.Log(GameManager.Instance.TotalEnemies);
+        }
     }
 
     private void Start()
     {
         SpawnFighter(0); // spawns enemies in first room on game start
+        CountAllEnemies();
     }
 
     public void SpawnFighter(int roomIndex) // spawns enemies in specified room
