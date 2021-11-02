@@ -17,6 +17,10 @@ public class GameManager : MonoBehaviour
     public bool GameStarted { get; set; }
     public bool GamePaused { get; set; }
     public bool GameOver { get; set; }
+    public bool GameWon { get; set; }
+
+    public int EnemiesDefeatedCount { get; set; }
+    public int TotalEnemies { get; internal set; }
 
     // text boxes during gameplay
     [SerializeField] private TextMeshProUGUI scoreText;
