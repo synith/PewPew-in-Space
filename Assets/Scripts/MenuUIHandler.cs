@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -14,6 +15,10 @@ public class MenuUIHandler : MonoBehaviour
     [SerializeField] private TextMeshProUGUI inputName; // input box for player name (NOT WORKING CURRENTLY: look into input boxes and WebGL conflicts)
     [SerializeField] private TextMeshProUGUI highScoreText;
     [SerializeField] private GameObject highScoreScreen;
+    [SerializeField] private GameObject settingsScreen;
+
+    [SerializeField] private Slider musicSlider;
+    [SerializeField] private Slider sfxSlider;
 
     [SerializeField] private AudioClip menuSound;
     [SerializeField] private AudioClip gameMusic;
@@ -44,6 +49,19 @@ public class MenuUIHandler : MonoBehaviour
             highScoreScreen.SetActive(false);
         else
             highScoreScreen.SetActive(true);
+    }
+    public void Settings()
+    {
+        MenuSound();
+        if (settingsScreen.activeInHierarchy)
+            settingsScreen.SetActive(false);
+        else
+            settingsScreen.SetActive(true);
+    }
+    private void Update()
+    {
+        SoundManager.Instance.musicVolume = musicSlider.value;
+        SoundManager.Instance.sfxVolume = sfxSlider.value;
     }
     public void ExitGame() // exit button - saves high score and closes application
     {
