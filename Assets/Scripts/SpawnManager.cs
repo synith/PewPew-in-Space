@@ -12,7 +12,7 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private Transform[] spawnPositionsRoom2;
     [SerializeField] private Transform[] spawnPositionsRoom3;
     [SerializeField] private Transform[] spawnPositionsRoom4;
-    
+
     [SerializeField] private GameObject fighterPrefab;  // enemy fighter starship
 
     private void Awake()
@@ -21,29 +21,24 @@ public class SpawnManager : MonoBehaviour
         Rooms[1] = spawnPositionsRoom1;
         Rooms[2] = spawnPositionsRoom2;
         Rooms[3] = spawnPositionsRoom3;
-        Rooms[4] = spawnPositionsRoom4;        
+        Rooms[4] = spawnPositionsRoom4;
     }
-
-    private void CountAllEnemies()
-    {
-        foreach (Transform[] transforms in Rooms)
-        {
-            GameManager.Instance.TotalEnemies += transforms.Length;
-            Debug.Log(GameManager.Instance.TotalEnemies);
-        }
-    }
-
     private void Start()
     {
         SpawnFighter(0); // spawns enemies in first room on game start
         CountAllEnemies();
     }
-
     public void SpawnFighter(int roomIndex) // spawns enemies in specified room
     {
         Transform[] room = Rooms[roomIndex];
-        foreach (Transform pos in room)        
+        foreach (Transform pos in room)
             Instantiate(fighterPrefab, pos);
     }
-
+    private void CountAllEnemies()
+    {
+        foreach (Transform[] transforms in Rooms)
+        {
+            GameManager.Instance.TotalEnemies += transforms.Length;
+        }
+    }
 }
