@@ -24,16 +24,18 @@ public class MenuUIHandler : MonoBehaviour
     [SerializeField] private AudioClip gameMusic;
 
     private AudioSource menuAudio;
+    private float menuVolume;
 
     private void Awake() // sets highscore text box to highscore from score manager
     {
         highScoreText.text = $"Best Score: {ScoreManager.Instance.HighScore} - {ScoreManager.Instance.HighScorePlayer}";
         menuAudio = GetComponent<AudioSource>();
         menuAudio.volume = SoundManager.Instance.sfxVolume;
+        menuVolume = SoundManager.Instance.sfxVolume;
     }
     private void MenuSound()
     {
-        menuAudio.PlayOneShot(menuSound, 0.1f);
+        menuAudio.PlayOneShot(menuSound, menuVolume * 0.1f);
     }
     public void StartNew() // start button - PlayerName string is assigned input name text value, then loads main game scene
     {
@@ -62,6 +64,7 @@ public class MenuUIHandler : MonoBehaviour
     {
         SoundManager.Instance.musicVolume = musicSlider.value;
         SoundManager.Instance.sfxVolume = sfxSlider.value;
+        menuVolume = sfxSlider.value;
     }
     public void ExitGame() // exit button - saves high score and closes application
     {
