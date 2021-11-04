@@ -96,18 +96,18 @@ public abstract class Starship : MonoBehaviour
             MissileHit(other);            
         }
     }
-    protected void LaserHit(Collider other) // does damage to starship's health system based on laser damage
+    protected void LaserHit(Collider laser) // does damage to starship's health system based on laser damage
     {
-        MoveLaser moveLaser = other.GetComponent<MoveLaser>();
+        MoveLaser moveLaser = laser.GetComponent<MoveLaser>();
         healthSystem.Damage(moveLaser.LaserDamage);
-        ReturnToPool(other);
+        ReturnToPool(laser);
         CheckDeath();
     }
-    protected void MissileHit(Collider other) // does damage to starship's health system based on missile damage
+    protected void MissileHit(Collider missile) // does damage to starship's health system based on missile damage
     {
-        HomingMissile homingMissile = other.GetComponent<HomingMissile>();
+        HomingMissile homingMissile = missile.GetComponent<HomingMissile>();
         healthSystem.Damage(homingMissile.MissileDamage);
-        Destroy(other.gameObject);
+        Destroy(missile.gameObject);
         CheckDeath();
     }
     protected void ReturnToPool(Collider other) // zero's velocity and disables object in active scene, returning the object to the pool

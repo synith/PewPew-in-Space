@@ -16,6 +16,7 @@ public class MenuUIHandler : MonoBehaviour
     [SerializeField] private TextMeshProUGUI highScoreText;
     [SerializeField] private GameObject highScoreScreen;
     [SerializeField] private GameObject settingsScreen;
+    [SerializeField] private GameObject howToPlayScreen;
 
     [SerializeField] private Slider musicSlider;
     [SerializeField] private Slider sfxSlider;
@@ -30,7 +31,10 @@ public class MenuUIHandler : MonoBehaviour
     {
         highScoreText.text = $"Best Score: {ScoreManager.Instance.HighScore} - {ScoreManager.Instance.HighScorePlayer}";
         menuAudio = GetComponent<AudioSource>();
-        menuAudio.volume = SoundManager.Instance.sfxVolume;
+
+        musicSlider.value = SoundManager.Instance.musicVolume;
+        sfxSlider.value = SoundManager.Instance.sfxVolume;
+
         menuVolume = SoundManager.Instance.sfxVolume;
     }
     private void MenuSound()
@@ -44,21 +48,16 @@ public class MenuUIHandler : MonoBehaviour
         ScoreManager.Instance.PlayerName = inputName.text;
         SceneManager.LoadScene(1);
     }
-    public void Score() // highscore button - toggles highscore UI window
+    public void Score() => ButtonToggle(highScoreScreen);
+    public void Settings() => ButtonToggle(settingsScreen);
+    public void HowToPlay() => ButtonToggle(howToPlayScreen);
+    public void ButtonToggle(GameObject window)
     {
         MenuSound();
-        if (highScoreScreen.activeInHierarchy)
-            highScoreScreen.SetActive(false);
+        if (window.activeInHierarchy)
+            window.SetActive(false);
         else
-            highScoreScreen.SetActive(true);
-    }
-    public void Settings()
-    {
-        MenuSound();
-        if (settingsScreen.activeInHierarchy)
-            settingsScreen.SetActive(false);
-        else
-            settingsScreen.SetActive(true);
+            window.SetActive(true);
     }
     private void Update()
     {
