@@ -286,7 +286,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 161427595}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2023937512}
+        m_TargetAssemblyTypeName: MenuUIHandler, Assembly-CSharp
+        m_MethodName: HowToPlay
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &161427595
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4655,7 +4667,7 @@ MonoBehaviour:
   highScoreText: {fileID: 257090060}
   highScoreScreen: {fileID: 465898509}
   settingsScreen: {fileID: 1731738266}
-  howToPlayScreen: {fileID: 0}
+  howToPlayScreen: {fileID: 2077605069}
   musicSlider: {fileID: 1002318554}
   sfxSlider: {fileID: 739113046}
   menuSound: {fileID: 8300000, guid: eb6325f73b03de7498f3f8f8d77ead01, type: 3}
