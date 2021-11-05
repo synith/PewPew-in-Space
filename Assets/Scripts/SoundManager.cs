@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class SoundManager : MonoBehaviour
@@ -23,6 +24,7 @@ public class SoundManager : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
+        LoadVolumeSettings();
     }
 
     public void PlaySound(AudioClip clip)
@@ -40,4 +42,38 @@ public class SoundManager : MonoBehaviour
     {
         bgmAudio.Stop();
     }
+
+    [System.Serializable]
+    class VolumeSettingsData // new class that stores name and score of highscore player
+    {
+        public float SFXVolume;
+        public float MusicVolume;
+    }
+
+    public void SaveVolumeSettings() // writes highscore data class to a json file
+    {
+        VolumeSettingsData data = new VolumeSettingsData();
+        data.SFXVolume = sfxVolume;
+        data.MusicVolume = musicVolume;
+
+        string json = JsonUtility.ToJson(data);
+
+        File.WriteAllText(Application.persistentDataPath + "/settingsfile.json", json);
+    }
+
+    public void LoadVolumeSettings() // reads highscore data class from a json file
+    {
+        string path = Application.persistentDataPath + "/settingsfile.json";
+        if (File.Exists(path))
+        {
+            string json = File.ReadAllText(path);
+            VolumeSettingsData data = JsonUtility.FromJson<VolumeSettingsData>(json);
+
+            sfxVolume = data.SFXVolume;
+            musicVolume = data.MusicVolume;
+        }
+    }
+
 }
+
+
