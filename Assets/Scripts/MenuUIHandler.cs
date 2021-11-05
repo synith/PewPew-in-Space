@@ -69,6 +69,7 @@ public class MenuUIHandler : MonoBehaviour
     {
         MenuSound();
         ScoreManager.Instance.SaveHighScore();
+        SoundManager.Instance.SaveVolumeSettings();
 
 #if UNITY_EDITOR
         EditorApplication.ExitPlaymode();
