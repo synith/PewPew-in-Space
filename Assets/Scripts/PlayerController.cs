@@ -51,14 +51,11 @@ public class PlayerController : Starship // INHERITANCE
             }
             else if (!isMissileReady)
             {
-                Debug.Log("Missile on Cooldown");
                 GameManager.Instance.ShowStatus("Missile on Cooldown"); // updates status text informing player missile is still on cooldown
-                // play other sad sound
                 starshipAudio.PlayOneShot(errorSound, 0.1f);
             }
             else if (missileCount < 1)
             {
-                Debug.Log("Out of missiles");
                 GameManager.Instance.ShowStatus("Out of missiles"); // updates status text informing player there are no more missiles to fire
                 starshipAudio.PlayOneShot(noAmmoSound, 0.1f);
             }

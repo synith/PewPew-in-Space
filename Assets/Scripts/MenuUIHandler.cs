@@ -59,7 +59,7 @@ public class MenuUIHandler : MonoBehaviour
         else
             window.SetActive(true);
     }
-    private void Update()
+    public void UpdateVolume()
     {
         SoundManager.Instance.musicVolume = musicSlider.value;
         SoundManager.Instance.sfxVolume = sfxSlider.value;
