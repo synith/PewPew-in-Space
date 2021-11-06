@@ -31,22 +31,29 @@ public class MainUIHandler : MonoBehaviour
 
     private void Update() // checks game states and shows corresponding UI windows
     {
+        CheckIfPaused();
+        CheckIfGameOver();
+        CheckIfGameWon();
+    }
+    private void CheckIfPaused()
+    {
         if (GameManager.Instance.GamePaused && !PauseScreen.activeInHierarchy)
         {
             mainAudio.PlayOneShot(pauseSound, 0.1f);
             Time.timeScale = 0; // pauses game
             PauseScreen.SetActive(true);
         }
+    }    
+    private void CheckIfGameOver()
+    {
         if (GameManager.Instance.GameOver && !GameOverScreen.activeInHierarchy)
-        {
             GameOverScreen.SetActive(true);
-        }
-        if (GameManager.Instance.GameWon && !GameWonScreen.activeInHierarchy) 
-        {
-            GameWonScreen.SetActive(true);
-        }
     }
-
+    private void CheckIfGameWon()
+    {
+        if (GameManager.Instance.GameWon && !GameWonScreen.activeInHierarchy)        
+            GameWonScreen.SetActive(true);        
+    }
     public void ResumeGame() // resume game button - unpause
     {
         if (GameManager.Instance.GamePaused)
