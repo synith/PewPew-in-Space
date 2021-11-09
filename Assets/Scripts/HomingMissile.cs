@@ -50,16 +50,16 @@ public class HomingMissile : MonoBehaviour
             return;
         if (missileFired && targetTransform != null) // if missile has been fired and there is a target, then rotate and move towards target
         {
-            RotateAndMoveMissile();
+            RotateMissile();
+            MoveMissile();
         }
     }
-
-    private void RotateAndMoveMissile()
+    private void RotateMissile()
     {
-        Quaternion missileTargetRotation = Quaternion.LookRotation(targetTransform.position - missileTransform.position).normalized; // new quaternion made of a vector3 that takes the target position minus the missile position
-        missileRigidbody.MoveRotation(Quaternion.RotateTowards(missileTransform.rotation, missileTargetRotation, turnSpeed)); // rotate object from current rotation towards target rotation at turn speed
-        
-        transform.Rotate(Vector3.forward, 90f * Time.deltaTime);
-        missileRigidbody.velocity = (missileTransform.forward * flySpeed); // add force forward
+        // new quaternion made of a vector3 that takes the target position minus the missile position
+        Quaternion missileTargetRotation = Quaternion.LookRotation(targetTransform.position - missileTransform.position).normalized;
+        // rotate object from current rotation towards target rotation at turn speed
+        missileRigidbody.MoveRotation(Quaternion.RotateTowards(missileTransform.rotation, missileTargetRotation, turnSpeed));     
     }
+    private void MoveMissile() => missileRigidbody.velocity = (missileTransform.forward * flySpeed);
 }
