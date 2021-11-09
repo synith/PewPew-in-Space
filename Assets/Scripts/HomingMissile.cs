@@ -58,6 +58,8 @@ public class HomingMissile : MonoBehaviour
     {
         Quaternion missileTargetRotation = Quaternion.LookRotation(targetTransform.position - missileTransform.position).normalized; // new quaternion made of a vector3 that takes the target position minus the missile position
         missileRigidbody.MoveRotation(Quaternion.RotateTowards(missileTransform.rotation, missileTargetRotation, turnSpeed)); // rotate object from current rotation towards target rotation at turn speed
+        
+        transform.Rotate(Vector3.forward, 90f * Time.deltaTime);
         missileRigidbody.velocity = (missileTransform.forward * flySpeed); // add force forward
     }
 }
