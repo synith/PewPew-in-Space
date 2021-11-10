@@ -48,7 +48,11 @@ public class MenuUIHandler : MonoBehaviour
         ScoreManager.Instance.PlayerName = inputName.text;
         SceneManager.LoadScene(1);
     }
-    public void Score() => ButtonToggle(highScoreScreen);
+    public void Score()
+    {
+        ButtonToggle(highScoreScreen);
+        ScoreManager.Instance.DownloadHighScore();
+    }
     public void Settings() => ButtonToggle(settingsScreen);
     public void HowToPlay() => ButtonToggle(howToPlayScreen);
     public void ButtonToggle(GameObject window)

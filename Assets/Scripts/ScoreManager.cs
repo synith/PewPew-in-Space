@@ -7,6 +7,8 @@ public class ScoreManager : MonoBehaviour
 {
     public static ScoreManager Instance { get; private set; } // ENCAPSULATION
 
+    private PlayFabManager playFabManager;
+
     // ENCAPSULATION
     public string PlayerName { get; set; }
     public string HighScorePlayer { get; set; }
@@ -14,6 +16,8 @@ public class ScoreManager : MonoBehaviour
 
     private void Awake() // check if this class exists already, and destroys this instance of the class if it does
     {
+        playFabManager = GetComponent<PlayFabManager>();
+
         if (Instance != null)
         {
             Destroy(gameObject);
@@ -55,4 +59,6 @@ public class ScoreManager : MonoBehaviour
             HighScorePlayer = data.HighScorePlayer;
         }
     }
+    public void UploadHighScore() => playFabManager.SendLeaderboard(HighScore);
+    public void DownloadHighScore() => playFabManager.GetLeaderboard();
 }
