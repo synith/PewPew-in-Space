@@ -12,52 +12,76 @@ using UnityEditor;
 [DefaultExecutionOrder(1000)]
 public class MenuUIHandler : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI inputName; // input box for player name (NOT WORKING CURRENTLY: look into input boxes and WebGL conflicts)
+    [SerializeField] private TextMeshProUGUI inputName;
     [SerializeField] private TextMeshProUGUI highScoreText;
     [SerializeField] private GameObject highScoreScreen;
     [SerializeField] private GameObject settingsScreen;
     [SerializeField] private GameObject howToPlayScreen;
+    [SerializeField] private GameObject enterNameObject;
 
     [SerializeField] private Slider musicSlider;
     [SerializeField] private Slider sfxSlider;
 
     [SerializeField] private AudioClip menuSound;
+    [SerializeField] private AudioClip errorSound;
     [SerializeField] private AudioClip gameMusic;
 
+
     private AudioSource menuAudio;
+    private UIShake uiShake;
     private float menuVolume;
 
     private void Awake() // sets highscore text box to highscore from score manager
     {
         highScoreText.text = $"Best Score: {ScoreManager.Instance.HighScore} - {ScoreManager.Instance.HighScorePlayer}";
         menuAudio = GetComponent<AudioSource>();
+        uiShake = GetComponent<UIShake>();
 
         musicSlider.value = SoundManager.Instance.musicVolume;
         sfxSlider.value = SoundManager.Instance.sfxVolume;
 
         menuVolume = SoundManager.Instance.sfxVolume;
+
+        inputName.text = ScoreManager.Instance.PlayerName;
     }
-    private void MenuSound()
+    private void PlaySound(AudioClip audioClip)
     {
-        menuAudio.PlayOneShot(menuSound, menuVolume * 0.1f);
+        menuAudio.PlayOneShot(audioClip, menuVolume * 0.1f);
+    }
+    public void OnNameEntered()
+    {
+        ScoreManager.Instance.PlayerName = inputName.text;        
     }
     public void StartNew() // start button - PlayerName string is assigned input name text value, then loads main game scene
     {
-        MenuSound();
-        SoundManager.Instance.PlayMusic(gameMusic);
-        ScoreManager.Instance.PlayerName = inputName.text;
-        SceneManager.LoadScene(1);
+        
+        if (string.IsNullOrEmpty(ScoreManager.Instance.PlayerName))
+        {
+            PlaySound(errorSound);
+            // Shake UI
+            uiShake.ShakeUI(enterNameObject);
+            return;            
+        }
+        else
+        {
+            PlaySound(menuSound);
+            SoundManager.Instance.PlayMusic(gameMusic);
+            ScoreManager.Instance.PlayerName = inputName.text;
+            ScoreManager.Instance.UpdatePlayerName();
+            SceneManager.LoadScene(1);
+        }
+
     }
     public void Score()
     {
-        ButtonToggle(highScoreScreen);
+        ToggleScreen(highScoreScreen);
         ScoreManager.Instance.DownloadHighScore();
     }
-    public void Settings() => ButtonToggle(settingsScreen);
-    public void HowToPlay() => ButtonToggle(howToPlayScreen);
-    public void ButtonToggle(GameObject window)
+    public void Settings() => ToggleScreen(settingsScreen);
+    public void HowToPlay() => ToggleScreen(howToPlayScreen);
+    public void ToggleScreen(GameObject window)
     {
-        MenuSound();
+        PlaySound(menuSound);
         if (window.activeInHierarchy)
             window.SetActive(false);
         else
@@ -71,7 +95,7 @@ public class MenuUIHandler : MonoBehaviour
     }
     public void ExitGame() // exit button - saves high score and closes application
     {
-        MenuSound();
+        PlaySound(menuSound);
         ScoreManager.Instance.SaveHighScore();
         SoundManager.Instance.SaveVolumeSettings();
 
