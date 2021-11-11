@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
 
     // ENCAPSULATION
     public static GameManager Instance { get; private set; }
-    public SpawnManager SpawnManager { get; private set; }
+    public SpawnManager SpawnManager { get; private set; }    
 
     // ENCAPSULATION
     public bool GameStarted { get; set; }
@@ -76,6 +76,7 @@ public class GameManager : MonoBehaviour
                 ScoreManager.Instance.HighScorePlayer = ScoreManager.Instance.PlayerName;
                 highScoreText.text = SetHighScore();
                 ScoreManager.Instance.SaveHighScore();
+                ScoreManager.Instance.UploadHighScore();
             }
         }
     }
