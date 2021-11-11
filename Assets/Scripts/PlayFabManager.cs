@@ -30,6 +30,7 @@ public class PlayFabManager : MonoBehaviour
         if (result.InfoResultPayload.PlayerProfile != null)
             name = result.InfoResultPayload.PlayerProfile.DisplayName;
         ScoreManager.Instance.PlayerName = name;
+        Debug.Log(name);
     }
     private void OnError(PlayFabError error)
     {

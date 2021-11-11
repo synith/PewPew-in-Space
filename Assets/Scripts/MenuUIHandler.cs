@@ -12,7 +12,7 @@ using UnityEditor;
 [DefaultExecutionOrder(1000)]
 public class MenuUIHandler : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI inputName;
+    [SerializeField] private TMP_InputField inputName;
     [SerializeField] private TextMeshProUGUI highScoreText;
     [SerializeField] private GameObject highScoreScreen;
     [SerializeField] private GameObject settingsScreen;
@@ -41,26 +41,33 @@ public class MenuUIHandler : MonoBehaviour
         sfxSlider.value = SoundManager.Instance.sfxVolume;
 
         menuVolume = SoundManager.Instance.sfxVolume;
-
+    }
+    private void Start()
+    {
+        StartCoroutine(SetPlayerNameToDisplayName());
+    }
+    private IEnumerator SetPlayerNameToDisplayName()
+    {
+        yield return new WaitForSeconds(0.5f);
         inputName.text = ScoreManager.Instance.PlayerName;
+
     }
     private void PlaySound(AudioClip audioClip)
     {
         menuAudio.PlayOneShot(audioClip, menuVolume * 0.1f);
     }
-    public void OnNameEntered()
+    public void OnNameChanged()
     {
-        ScoreManager.Instance.PlayerName = inputName.text;        
+        ScoreManager.Instance.PlayerName = inputName.text;
     }
     public void StartNew() // start button - PlayerName string is assigned input name text value, then loads main game scene
     {
-        
+
         if (string.IsNullOrEmpty(ScoreManager.Instance.PlayerName))
         {
             PlaySound(errorSound);
-            // Shake UI
             uiShake.ShakeUI(enterNameObject);
-            return;            
+            return;
         }
         else
         {

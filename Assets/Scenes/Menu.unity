@@ -3891,19 +3891,7 @@ MonoBehaviour:
       m_Calls: []
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2023937512}
-        m_TargetAssemblyTypeName: MenuUIHandler, Assembly-CSharp
-        m_MethodName: OnNameEntered
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   m_OnTouchScreenKeyboardStatusChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -5019,7 +5007,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b692fb0108ecbac4687f5f089d1db21d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputName: {fileID: 896710562}
+  inputName: {fileID: 1689014442}
   highScoreText: {fileID: 257090060}
   highScoreScreen: {fileID: 465898509}
   settingsScreen: {fileID: 1731738266}
