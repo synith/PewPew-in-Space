@@ -15,14 +15,24 @@ public class PlayFabManager : MonoBehaviour
         var request = new LoginWithCustomIDRequest
         {
             CustomId = SystemInfo.deviceUniqueIdentifier,
-            CreateAccount = true
+            CreateAccount = true,
+            InfoRequestParameters = new GetPlayerCombinedInfoRequestParams
+            {
+                GetPlayerProfile = true
+            }
         };
-        PlayFabClientAPI.LoginWithCustomID(request, OnSuccess, OnError);
+        PlayFabClientAPI.LoginWithCustomID(request, OnLoginSuccess, OnError);
     }
-    private void OnSuccess(LoginResult result) => Debug.Log("Successful login/account create!");
+    private void OnLoginSuccess(LoginResult result)
+    {
+        Debug.Log("Successful login/account create!");
+        string name = null;
+        if (result.InfoResultPayload.PlayerProfile != null)
+            name = result.InfoResultPayload.PlayerProfile.DisplayName;
+        ScoreManager.Instance.PlayerName = name;
+    }
     private void OnError(PlayFabError error)
     {
-        Debug.LogError("Error while logging in/creating account!");
         Debug.Log(error.GenerateErrorReport());
     }
     public void SendLeaderboard(int score)
@@ -54,7 +64,20 @@ public class PlayFabManager : MonoBehaviour
     {
         foreach (var item in result.Leaderboard)
         {
-            Debug.Log(item.Position + " " + item.PlayFabId + " " + item.StatValue);
+            Debug.Log(item.Position + " " + item.DisplayName + " " + item.StatValue);
         }
+    }
+
+    public void SetDisplayName(string name)
+    {
+        var request = new UpdateUserTitleDisplayNameRequest
+        {
+            DisplayName = name
+        };
+        PlayFabClientAPI.UpdateUserTitleDisplayName(request, OnDisplayNameUpdate, OnError);
+    }
+    private void OnDisplayNameUpdate(UpdateUserTitleDisplayNameResult result)
+    {
+        Debug.Log("Updated Display Name: " + result.DisplayName);
     }
 }

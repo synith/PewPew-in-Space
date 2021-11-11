@@ -61,4 +61,5 @@ public class ScoreManager : MonoBehaviour
     }
     public void UploadHighScore() => playFabManager.SendLeaderboard(HighScore);
     public void DownloadHighScore() => playFabManager.GetLeaderboard();
+    public void UpdatePlayerName() => playFabManager.SetDisplayName(PlayerName);
 }
