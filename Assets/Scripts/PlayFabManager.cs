@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using PlayFab;
 using PlayFab.ClientModels;
+using TMPro;
 
 public class PlayFabManager : MonoBehaviour
 {
+    [SerializeField] private GameObject rowPrefab;
+    [SerializeField] private Transform rowsParent;
+
     private void Start()
     {
         Login();
@@ -57,14 +61,25 @@ public class PlayFabManager : MonoBehaviour
         {
             StatisticName = "HighScore",
             StartPosition = 0,
-            MaxResultsCount = 10
+            MaxResultsCount = 5
         };
         PlayFabClientAPI.GetLeaderboard(request, OnLeaderboardGet, OnError);
     }
     private void OnLeaderboardGet(GetLeaderboardResult result)
     {
+        foreach (Transform item in rowsParent)
+        {
+            Destroy(item.gameObject);
+        }
+
         foreach (var item in result.Leaderboard)
         {
+            GameObject row = Instantiate(rowPrefab, rowsParent);
+            TextMeshProUGUI[] textMeshPros = row.GetComponentsInChildren<TextMeshProUGUI>();
+            textMeshPros[0].text = (item.Position + 1).ToString();
+            textMeshPros[1].text = item.DisplayName;
+            textMeshPros[2].text = item.StatValue.ToString();
+
             Debug.Log(item.Position + " " + item.DisplayName + " " + item.StatValue);
         }
     }

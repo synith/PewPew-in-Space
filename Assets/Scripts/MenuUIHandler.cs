@@ -33,7 +33,7 @@ public class MenuUIHandler : MonoBehaviour
 
     private void Awake() // sets highscore text box to highscore from score manager
     {
-        highScoreText.text = $"Best Score: {ScoreManager.Instance.HighScore} - {ScoreManager.Instance.HighScorePlayer}";
+        highScoreText.text = $"Your Best Score: {ScoreManager.Instance.HighScore}";
         menuAudio = GetComponent<AudioSource>();
         uiShake = GetComponent<UIShake>();
 
