@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d0199c11aa6f514784c5c69cd8378d8, type: 3}
   m_Name: PlayFabEditorPrefsSO
   m_EditorClassIdentifier: 
-  DevAccountEmail: synith@live.ca
-  DevAccountToken: n57r3on5hxxajgtaqexzgy6grbk4ba6ummorrnzcaefe9wrgzu5eiuab8dwre3zdo658gmwh5qa4mwoo9i3j95ze15dzwiawxi364q566ry8dqdwrbsxakskascimf9d4jgk4gqu37i7gzqwbbf83t5qbo5nrb778g5uzawcot76zj1ny9e7n51n91618sp5b4dre6ka
-  SelectedStudio: Syn Games
-  SdkPath: Assets/PlayFabSDK
+  DevAccountEmail: 
+  DevAccountToken: 
+  SelectedStudio: 
+  SdkPath: 
   EdExPath: 
   LocalCloudScriptPath: 
   PanelIsShown: 0
-  curMainMenuIdx: 1
+  curMainMenuIdx: 0
   curSubMenuIdx: 0
