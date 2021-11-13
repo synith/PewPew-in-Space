@@ -6461,6 +6461,7 @@ GameObject:
   - component: {fileID: 2101621725}
   - component: {fileID: 2101621724}
   - component: {fileID: 2101621726}
+  - component: {fileID: 2101621727}
   m_Layer: 0
   m_Name: ScoreManager
   m_TagString: Untagged
@@ -6508,6 +6509,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rowPrefab: {fileID: 1914671912645132756, guid: 737d59efadd88d74d959830986b87eec, type: 3}
   rowsParent: {fileID: 811719580}
+--- !u!114 &2101621727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2101621723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 060887684411c1341a7db02115106feb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2103432029
 GameObject:
   m_ObjectHideFlags: 0

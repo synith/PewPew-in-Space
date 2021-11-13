@@ -10,15 +10,29 @@ public class PlayFabManager : MonoBehaviour
     [SerializeField] private GameObject rowPrefab;
     [SerializeField] private Transform rowsParent;
 
+    private PlayerID playerIDManager;
+    private string _customID;
+
+    private void Awake()
+    {
+        playerIDManager = GetComponent<PlayerID>();
+    }
+
     private void Start()
     {
+        if (!playerIDManager.PlayerHasID())
+            playerIDManager.CreatePlayerID();
+
+        _customID = playerIDManager.GetPlayerID();
+        Debug.Log(_customID);
         Login();
+        
     }
     private void Login()
     {
         var request = new LoginWithCustomIDRequest
         {
-            CustomId = SystemInfo.deviceUniqueIdentifier,
+            CustomId = _customID,
             CreateAccount = true,
             InfoRequestParameters = new GetPlayerCombinedInfoRequestParams
             {
