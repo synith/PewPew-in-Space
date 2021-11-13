@@ -44,12 +44,12 @@ public class ScoreManager : MonoBehaviour
 
         string json = JsonUtility.ToJson(data);
 
-        File.WriteAllText(Application.persistentDataPath + "/highscorefile.json", json);
+        File.WriteAllText(Application.persistentDataPath + "/scorefile.json", json);
     }
 
     public void LoadHighScore() // reads highscore data class from a json file
     {
-        string path = Application.persistentDataPath + "/highscorefile.json";
+        string path = Application.persistentDataPath + "/scorefile.json";
         if (File.Exists(path))
         {
             string json = File.ReadAllText(path);

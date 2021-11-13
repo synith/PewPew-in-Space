@@ -82,7 +82,8 @@ public class MenuUIHandler : MonoBehaviour
     public void Score()
     {
         ToggleScreen(highScoreScreen);
-        ScoreManager.Instance.DownloadHighScore();
+        if (highScoreScreen.activeInHierarchy)
+            ScoreManager.Instance.DownloadHighScore();
     }
     public void Settings() => ToggleScreen(settingsScreen);
     public void HowToPlay() => ToggleScreen(howToPlayScreen);
