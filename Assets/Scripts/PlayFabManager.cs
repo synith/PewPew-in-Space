@@ -28,6 +28,7 @@ public class PlayFabManager : MonoBehaviour
         Login();
         
     }
+    public void SetScoreTable(Transform table) => rowsParent = table;
     private void Login()
     {
         var request = new LoginWithCustomIDRequest
@@ -97,7 +98,6 @@ public class PlayFabManager : MonoBehaviour
             Debug.Log(item.Position + " " + item.DisplayName + " " + item.StatValue);
         }
     }
-
     public void SetDisplayName(string name)
     {
         var request = new UpdateUserTitleDisplayNameRequest
