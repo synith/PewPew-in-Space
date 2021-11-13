@@ -18,6 +18,7 @@ public class MenuUIHandler : MonoBehaviour
     [SerializeField] private GameObject settingsScreen;
     [SerializeField] private GameObject howToPlayScreen;
     [SerializeField] private GameObject enterNameObject;
+    [SerializeField] private GameObject scoreTable;
 
     [SerializeField] private Slider musicSlider;
     [SerializeField] private Slider sfxSlider;
@@ -26,7 +27,7 @@ public class MenuUIHandler : MonoBehaviour
     [SerializeField] private AudioClip errorSound;
     [SerializeField] private AudioClip gameMusic;
 
-
+    private PlayFabManager playFabManager;
     private AudioSource menuAudio;
     private UIShake uiShake;
     private float menuVolume;
@@ -36,6 +37,7 @@ public class MenuUIHandler : MonoBehaviour
         highScoreText.text = $"Your Best Score: {ScoreManager.Instance.HighScore}";
         menuAudio = GetComponent<AudioSource>();
         uiShake = GetComponent<UIShake>();
+        playFabManager = ScoreManager.Instance.GetComponent<PlayFabManager>();
 
         musicSlider.value = SoundManager.Instance.musicVolume;
         sfxSlider.value = SoundManager.Instance.sfxVolume;
@@ -45,6 +47,11 @@ public class MenuUIHandler : MonoBehaviour
     private void Start()
     {
         StartCoroutine(SetPlayerNameToDisplayName());
+    }
+
+    private void OnEnable()
+    {
+        playFabManager.SetScoreTable(scoreTable.transform);
     }
     private IEnumerator SetPlayerNameToDisplayName()
     {

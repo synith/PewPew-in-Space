@@ -5939,6 +5939,7 @@ MonoBehaviour:
   settingsScreen: {fileID: 1731738266}
   howToPlayScreen: {fileID: 2077605069}
   enterNameObject: {fileID: 1544970166}
+  scoreTable: {fileID: 811719579}
   musicSlider: {fileID: 1002318554}
   sfxSlider: {fileID: 739113046}
   menuSound: {fileID: 8300000, guid: eb6325f73b03de7498f3f8f8d77ead01, type: 3}
