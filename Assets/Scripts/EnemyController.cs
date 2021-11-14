@@ -4,6 +4,8 @@ public class EnemyController : Starship // INHERITANCE
     [SerializeField] private float checkDistanceSeconds;
     private Transform playerPosition;
     private bool isTooClose;
+    private bool goRight;
+    private bool hasHitWall;
     private readonly float minRange = 120;
     private readonly float closeRange = 40;
     protected override void Awake() // find player's position on script loading
@@ -64,6 +66,24 @@ public class EnemyController : Starship // INHERITANCE
     {
         if (!isInRange) moveDirection = Vector3.forward;     // if not in range move forward
         else if (isTooClose) moveDirection = Vector3.back;   // if too close then move back     
-        else moveDirection = Vector3.left;                   // if in range and not too close then strafe left
+        else moveDirection = GetStrafeDirection();           // if in range and not too close then strafe
+    }
+    private Vector3 GetStrafeDirection()
+    {
+        Vector3 strafeDirection;
+        if (goRight) strafeDirection = Vector3.right;
+        else strafeDirection = Vector3.left;
+        return strafeDirection;
+    }
+    private void ChangeStrafeDirection()
+    {
+        goRight = !goRight;
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Wall"))
+        {
+            ChangeStrafeDirection();
+        }
     }
 }
