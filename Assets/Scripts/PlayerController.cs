@@ -22,6 +22,10 @@ public class PlayerController : Starship // INHERITANCE
         Vector2 inputVec = input.Get<Vector2>();
         moveDirection = new Vector3(inputVec.x, 0, inputVec.y);
     }
+    protected override void MoveShip()
+    {
+        rb.AddForce(moveDirection * speed);
+    }
     private void OnShield(InputValue input) // checks to see if shield button is held down and sets shield bool and player tag accordingly
     {
         if (input.Get<float>() > 0.9f)
