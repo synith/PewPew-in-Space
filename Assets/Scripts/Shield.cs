@@ -74,7 +74,7 @@ public class Shield : MonoBehaviour
     {
         yield return new WaitForSeconds(shieldRegenTime);        
 
-        if(gameObject != null && starship.shieldDown)
+        if(gameObject.activeInHierarchy && starship.shieldDown)
         {
             healthSystem.Heal(maxShieldHealth);
             shieldAudioSource.PlayOneShot(shieldRegenClip, 0.1f);
