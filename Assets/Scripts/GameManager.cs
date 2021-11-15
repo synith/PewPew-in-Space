@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour
 
     public int EnemiesDefeatedCount { get; set; }
     public int TotalEnemies { get; internal set; }
+    public int EnemiesDefeatedInRoom { get; set; }
+    public int TotalEnemiesInRoom { get; set; }
 
     // text boxes during gameplay
     [SerializeField] private TextMeshProUGUI scoreText;
