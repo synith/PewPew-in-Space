@@ -32,10 +32,16 @@ public class EnemyController : Starship // INHERITANCE
             Destroy(gameObject);
             GameManager.Instance.AddPoint(5);
             GameManager.Instance.EnemiesDefeatedCount++;
+            GameManager.Instance.EnemiesDefeatedInRoom++;
 
             if (GameManager.Instance.EnemiesDefeatedCount >= GameManager.Instance.TotalEnemies)
             {
                 GameManager.Instance.GameWon = true;
+            }
+            if (GameManager.Instance.EnemiesDefeatedInRoom >= GameManager.Instance.TotalEnemiesInRoom)
+            {
+                GameManager.Instance.SpawnManager.OpenDoor(GameManager.Instance.SpawnManager.CurrentRoomNumber);
+                GameManager.Instance.EnemiesDefeatedInRoom = 0;
             }
         }
     }

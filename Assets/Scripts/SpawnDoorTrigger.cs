@@ -9,15 +9,19 @@ public class SpawnDoorTrigger : MonoBehaviour
     private bool door2Open;
     private bool door3Open;
     private bool door4Open;
-    private bool door5Open;
+
+    private SpawnManager spawnManager;
 
     private void Start() // set all doors to closed on start
     {
+        spawnManager = GameManager.Instance.SpawnManager;
         door1Open = false;
         door2Open = false;
         door3Open = false;
         door4Open = false;
-        door5Open = false;
+
+        spawnManager.CurrentRoomNumber = 0;
+        CountEnemiesInRoom(spawnManager.CurrentRoomNumber);
     }
 
     private void OnTriggerEnter(Collider other) // checking if player triggered door
@@ -27,6 +31,17 @@ public class SpawnDoorTrigger : MonoBehaviour
             CheckDoor(other);
         }
     }
+    private void CloseDoorBehindPlayer(int room) => spawnManager.DoorsClosed[room - 1].SetActive(true);
+    private void CountEnemiesInRoom(int room) => GameManager.Instance.TotalEnemiesInRoom = spawnManager.EnemyTotalCountInRoom(room);
+    private void OpenNextRoom(int room)
+    {
+        CloseDoorBehindPlayer(room);
+        spawnManager.SpawnFighter(room);
+        CountEnemiesInRoom(room);
+        spawnManager.CurrentRoomNumber = room;
+        GameManager.Instance.EnemiesDefeatedInRoom = 0;
+    }
+
     private void CheckDoor(Collider other) // checks which numbered door player entered and spawns fighters in the appropriate room
     {
         int room;
@@ -34,31 +49,25 @@ public class SpawnDoorTrigger : MonoBehaviour
         {
             room = 1;
             door1Open = true;
-            GameManager.Instance.SpawnManager.SpawnFighter(room);
+            OpenNextRoom(room);
         }
         else if (other.name == "Door2" && !door2Open)
         {
             room = 2;
             door2Open = true;
-            GameManager.Instance.SpawnManager.SpawnFighter(room);
+            OpenNextRoom(room);
         }
         else if (other.name == "Door3" && !door3Open)
         {
             room = 3;
             door3Open = true;
-            GameManager.Instance.SpawnManager.SpawnFighter(room);
+            OpenNextRoom(room);
         }
         else if (other.name == "Door4" && !door4Open)
         {
             room = 4;
             door4Open = true;
-            GameManager.Instance.SpawnManager.SpawnFighter(room);
-        }
-        else if (other.name == "Door5" && !door5Open)
-        {
-            room = 5;
-            door5Open = true;
-            GameManager.Instance.SpawnManager.SpawnFighter(room);
+            OpenNextRoom(room);
         }
     }
 }
