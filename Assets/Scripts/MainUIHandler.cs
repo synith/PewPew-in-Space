@@ -51,8 +51,12 @@ public class MainUIHandler : MonoBehaviour
     }
     private void CheckIfGameWon()
     {
-        if (GameManager.Instance.GameWon && !GameWonScreen.activeInHierarchy)        
-            GameWonScreen.SetActive(true);        
+        if (GameManager.Instance.GameWon && !GameWonScreen.activeInHierarchy)
+        {
+            GameWonScreen.SetActive(true);
+            GameManager.Instance.GamePaused = true;
+        }       
+                
     }
     public void ResumeGame() // resume game button - unpause
     {
