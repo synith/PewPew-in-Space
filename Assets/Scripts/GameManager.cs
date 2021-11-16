@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI highScoreText;
     [SerializeField] private TextMeshProUGUI statusText;
+    [SerializeField] private TextMeshProUGUI missileCountText;
 
     private int currentScore;
 
@@ -109,5 +110,10 @@ public class GameManager : MonoBehaviour
             score = $"Score: ? - Not Found";
             return score;
         }
+    }
+
+    public void SetMissileCountText(int missileCount)
+    {
+        missileCountText.text = "x " + missileCount;
     }
 }

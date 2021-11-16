@@ -13,6 +13,12 @@ public class PlayerController : Starship // INHERITANCE
     [SerializeField] private AudioClip noAmmoSound;
     [SerializeField] private AudioClip errorSound;
 
+    protected override void Start()
+    {
+        base.Start();
+        GameManager.Instance.SetMissileCountText(missileCount);
+    }
+
     private void OnPause() // if pause key is pressed sets game state to paused
     {
         GameManager.Instance.GamePaused = true;
@@ -83,6 +89,7 @@ public class PlayerController : Starship // INHERITANCE
     private void FireMissile(Transform target)
     {
         missileCount--;
+        GameManager.Instance.SetMissileCountText(missileCount);
 
         isMissileArmed = false;
         StartCoroutine(nameof(MissileArmed));
