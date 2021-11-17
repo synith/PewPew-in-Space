@@ -2052,7 +2052,7 @@ GameObject:
   - component: {fileID: 818653480}
   - component: {fileID: 818653481}
   m_Layer: 0
-  m_Name: Mngr_Score
+  m_Name: Mngr_Sound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

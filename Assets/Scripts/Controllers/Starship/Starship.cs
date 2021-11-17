@@ -1,4 +1,7 @@
 using UnityEngine;
+
+[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(AudioSource))]
 public abstract class Starship : MonoBehaviour
 {
     // Polymorphic variables to be used by children classes

@@ -11,7 +11,6 @@ public class CloseDoor : MonoBehaviour
         if (other.CompareTag("Hull") || other.CompareTag("Shield"))
         {
             doorReplacementWall.SetActive(true);
-            Debug.Log("Went through door");
         }
     }
 }
