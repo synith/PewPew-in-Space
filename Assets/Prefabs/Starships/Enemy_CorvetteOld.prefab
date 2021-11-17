@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8504459716190605245}
   - component: {fileID: 8504459716190605244}
   m_Layer: 0
-  m_Name: CorvetteOld
+  m_Name: Enemy_CorvetteOld
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
