@@ -279,8 +279,8 @@ GameObject:
   - component: {fileID: 126648864}
   - component: {fileID: 126648866}
   - component: {fileID: 126648865}
-  - component: {fileID: 126648867}
   - component: {fileID: 126648868}
+  - component: {fileID: 126648867}
   m_Layer: 0
   m_Name: Door3
   m_TagString: Door
@@ -541,7 +541,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 178797624}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 2.6503184, y: 1, z: 0.08870963}
@@ -1891,8 +1891,8 @@ GameObject:
   m_Component:
   - component: {fileID: 650029578}
   - component: {fileID: 650029580}
-  - component: {fileID: 650029579}
   - component: {fileID: 650029581}
+  - component: {fileID: 650029579}
   - component: {fileID: 650029583}
   - component: {fileID: 650029582}
   m_Layer: 0
@@ -1986,7 +1986,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 650029577}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 2.3, y: 1, z: 0.2}
@@ -1999,7 +1999,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 650029577}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 2.3, y: 1, z: 0.2}
@@ -5530,9 +5530,9 @@ GameObject:
   - component: {fileID: 1600892273}
   - component: {fileID: 1600892275}
   - component: {fileID: 1600892274}
+  - component: {fileID: 1600892277}
   - component: {fileID: 1600892276}
   - component: {fileID: 1600892278}
-  - component: {fileID: 1600892277}
   m_Layer: 0
   m_Name: Door1
   m_TagString: Door
