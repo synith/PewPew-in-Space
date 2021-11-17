@@ -33,5 +33,4 @@ public class HealthBar : MonoBehaviour // health bar using slider that sets its 
     {
         slider.value = health;
     }
-
 }

@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+
+[RequireComponent(typeof(CamFollow))]
+[RequireComponent(typeof(PlayerInput))]
+[RequireComponent(typeof(SpawnDoorTrigger))]
 public class PlayerController : Starship // INHERITANCE
 {
     [SerializeField] private float missileRange = 100f;
