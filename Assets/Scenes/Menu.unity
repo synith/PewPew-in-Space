@@ -293,7 +293,7 @@ GameObject:
   - component: {fileID: 161427595}
   - component: {fileID: 161427594}
   m_Layer: 5
-  m_Name: How to Play Button
+  m_Name: Btn_HowToPlay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -859,7 +859,7 @@ GameObject:
   - component: {fileID: 304153771}
   - component: {fileID: 304153770}
   m_Layer: 5
-  m_Name: Exit Button
+  m_Name: Btn_Exit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1115,7 +1115,7 @@ GameObject:
   m_Component:
   - component: {fileID: 465898510}
   m_Layer: 5
-  m_Name: HighScore Screen
+  m_Name: UI_Screen_HighScore
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1483,7 +1483,7 @@ GameObject:
   - component: {fileID: 704201675}
   - component: {fileID: 704201674}
   m_Layer: 5
-  m_Name: Score Button
+  m_Name: Btn_Score
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1616,7 +1616,7 @@ GameObject:
   - component: {fileID: 731464950}
   - component: {fileID: 731464949}
   m_Layer: 5
-  m_Name: Start Button
+  m_Name: Btn_Start
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2052,7 +2052,7 @@ GameObject:
   - component: {fileID: 818653480}
   - component: {fileID: 818653481}
   m_Layer: 0
-  m_Name: SoundManager
+  m_Name: Mngr_Score
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2931,7 +2931,7 @@ GameObject:
   - component: {fileID: 1072303898}
   - component: {fileID: 1072303897}
   m_Layer: 5
-  m_Name: NameText
+  m_Name: UI_NameText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4060,7 +4060,7 @@ GameObject:
   - component: {fileID: 1343262918}
   - component: {fileID: 1343262917}
   m_Layer: 5
-  m_Name: Settings Button
+  m_Name: Btn_Settings
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4515,7 +4515,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1544970167}
   m_Layer: 5
-  m_Name: EnterNameObject
+  m_Name: UI_NameText_Holder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4753,7 +4753,7 @@ GameObject:
   - component: {fileID: 1713555226}
   - component: {fileID: 1713555229}
   m_Layer: 0
-  m_Name: Main Camera
+  m_Name: Cam_Main
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4867,7 +4867,7 @@ GameObject:
   - component: {fileID: 1731738267}
   - component: {fileID: 1731738268}
   m_Layer: 5
-  m_Name: Settings Screen
+  m_Name: UI_Screen_Settings
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5552,7 +5552,7 @@ GameObject:
   - component: {fileID: 1931879859}
   - component: {fileID: 1931879858}
   m_Layer: 5
-  m_Name: TitleText
+  m_Name: UI_TitleText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5825,7 +5825,7 @@ GameObject:
   - component: {fileID: 2023937512}
   - component: {fileID: 2023937513}
   m_Layer: 5
-  m_Name: Title Screen UI
+  m_Name: UI_Canvas_Title Screen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6290,7 +6290,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2077605070}
   m_Layer: 5
-  m_Name: How To Play Screen
+  m_Name: UI_Screen_HowToPlay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6464,7 +6464,7 @@ GameObject:
   - component: {fileID: 2101621726}
   - component: {fileID: 2101621727}
   m_Layer: 0
-  m_Name: ScoreManager
+  m_Name: Mngr_Score
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
