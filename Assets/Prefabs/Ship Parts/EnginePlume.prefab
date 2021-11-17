@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5336678364906981856}
   - component: {fileID: 7920503514212334890}
   m_Layer: 0
-  m_Name: engine_plume
+  m_Name: EnginePlume
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
