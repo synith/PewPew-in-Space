@@ -184,5 +184,9 @@ public class PlayerController : Starship // INHERITANCE
             // do damage to shield
         }
     }
+    public HealthSystem GetHealthSystem()
+    {
+        return healthSystem;
+    }
     
 }
