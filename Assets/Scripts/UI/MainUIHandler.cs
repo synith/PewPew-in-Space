@@ -54,7 +54,7 @@ public class MainUIHandler : MonoBehaviour
         if (GameManager.Instance.GameWon && !GameWonScreen.activeInHierarchy)
         {
             GameWonScreen.SetActive(true);
-            GameManager.Instance.GamePaused = true;
+            Time.timeScale = 0;
         }       
                 
     }

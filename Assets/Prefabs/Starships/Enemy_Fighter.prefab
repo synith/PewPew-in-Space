@@ -558,6 +558,9 @@ MonoBehaviour:
   missileHitSound: {fileID: 8300000, guid: 2c82a85115c5df44c83345022410ecd7, type: 3}
   deathSound: {fileID: 8300000, guid: 402ac8571968c3d469d6d177f49e459b, type: 3}
   checkDistanceSeconds: 0.5
+  healthPickupPrefab: {fileID: 1343503498964693897, guid: de35c4b74378bba4c9cef7c7ac419b6f, type: 3}
+  missilePickupPrefab: {fileID: 8999667994962716328, guid: 04be0be2d9613cd4392837f9061a9c5c, type: 3}
+  dropPickupSound: {fileID: 8300000, guid: 56a7cef7e9e14b74cb8798717d074f96, type: 3}
 --- !u!82 &-4909873173333726966
 AudioSource:
   m_ObjectHideFlags: 0

@@ -49,6 +49,10 @@ public class SpawnManager : MonoBehaviour
     }
     public void OpenDoor(int room)
     {
+        if (room >= DoorsClosed.Length)
+        {
+            return;
+        }
         DoorsClosed[room].SetActive(false);
     }
     private void CloseAllDoors()

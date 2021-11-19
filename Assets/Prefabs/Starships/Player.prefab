@@ -659,6 +659,7 @@ MonoBehaviour:
   missileCount: 3
   noAmmoSound: {fileID: 8300000, guid: e95c1562763b02048befa7106fd4937e, type: 3}
   errorSound: {fileID: 8300000, guid: 783d49ab2b2b9bf4c8924bf60a67e3ff, type: 3}
+  pickupSound: {fileID: 8300000, guid: 5cfdab52aa9db924286a55db43ce6b0a, type: 3}
 --- !u!114 &8142929127313353603
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -781,7 +782,7 @@ GameObject:
   - component: {fileID: 5702946095712147405}
   - component: {fileID: 3157505027136314987}
   - component: {fileID: 2828620971016755777}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: UI_Health Bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -944,7 +945,7 @@ GameObject:
   - component: {fileID: 5702946096832969151}
   - component: {fileID: 5702946096832969089}
   - component: {fileID: 5702946096832969150}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1019,7 +1020,7 @@ GameObject:
   - component: {fileID: 5702946096947421136}
   - component: {fileID: 5702946096947421138}
   - component: {fileID: 5702946096947421139}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
