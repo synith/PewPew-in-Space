@@ -16,6 +16,7 @@ public class PlayerController : Starship // INHERITANCE
 
     [SerializeField] private AudioClip noAmmoSound;
     [SerializeField] private AudioClip errorSound;
+    [SerializeField] private AudioClip pickupSound;
 
     protected override void Start()
     {
@@ -182,6 +183,22 @@ public class PlayerController : Starship // INHERITANCE
         {
             ReturnToPool(other);
             // do damage to shield
+        }
+        else if (other.CompareTag("Pickup_Health"))
+        {
+            Destroy(other.gameObject);
+            starshipAudio.PlayOneShot(pickupSound, 0.1f);
+            healthSystem.Heal(30);
+        }
+        else if (other.CompareTag("Pickup_Missile"))
+        {
+            Destroy(other.gameObject);
+            starshipAudio.PlayOneShot(pickupSound, 0.1f);
+            if (missileCount < 3)
+            {
+                missileCount++;
+                GameManager.Instance.SetMissileCountText(missileCount);
+            }
         }
     }
     public HealthSystem GetHealthSystem()

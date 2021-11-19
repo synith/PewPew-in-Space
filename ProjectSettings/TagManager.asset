@@ -11,6 +11,8 @@ TagManager:
   - Hull
   - Shield
   - Wall
+  - Pickup_Health
+  - Pickup_Missile
   layers:
   - Default
   - TransparentFX

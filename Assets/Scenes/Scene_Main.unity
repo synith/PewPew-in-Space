@@ -9083,14 +9083,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 5702946095712147402, guid: 1e7ff676db373bb4d9d490e1ee4d6e27, type: 3}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5702946096832969148, guid: 1e7ff676db373bb4d9d490e1ee4d6e27, type: 3}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5702946096832969151, guid: 1e7ff676db373bb4d9d490e1ee4d6e27, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -9099,34 +9091,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5702946096947421137, guid: 1e7ff676db373bb4d9d490e1ee4d6e27, type: 3}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8142929127313353602, guid: 1e7ff676db373bb4d9d490e1ee4d6e27, type: 3}
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 1128022430}
-    - target: {fileID: 8142929127313353603, guid: 1e7ff676db373bb4d9d490e1ee4d6e27, type: 3}
-      propertyPath: doors.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 8142929127313353603, guid: 1e7ff676db373bb4d9d490e1ee4d6e27, type: 3}
-      propertyPath: doors.Array.data[0]
-      value: 
-      objectReference: {fileID: 1600892272}
-    - target: {fileID: 8142929127313353603, guid: 1e7ff676db373bb4d9d490e1ee4d6e27, type: 3}
-      propertyPath: doors.Array.data[1]
-      value: 
-      objectReference: {fileID: 178797624}
-    - target: {fileID: 8142929127313353603, guid: 1e7ff676db373bb4d9d490e1ee4d6e27, type: 3}
-      propertyPath: doors.Array.data[2]
-      value: 
-      objectReference: {fileID: 126648863}
-    - target: {fileID: 8142929127313353603, guid: 1e7ff676db373bb4d9d490e1ee4d6e27, type: 3}
-      propertyPath: doors.Array.data[3]
-      value: 
-      objectReference: {fileID: 650029577}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1e7ff676db373bb4d9d490e1ee4d6e27, type: 3}
 --- !u!114 &5454927115977924572 stripped
