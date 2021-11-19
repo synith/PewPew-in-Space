@@ -8,6 +8,11 @@ public class EnemyController : Starship // INHERITANCE
     private bool hasHitWall;
     private readonly float minRange = 120;
     private readonly float closeRange = 40;
+
+    [SerializeField] private GameObject healthPickupPrefab;
+    [SerializeField] private GameObject missilePickupPrefab;
+    [SerializeField] private AudioClip dropPickupSound;
+
     protected override void Awake() // find player's position on script loading
     {
         base.Awake(); // POLYMORPHISM
@@ -29,10 +34,13 @@ public class EnemyController : Starship // INHERITANCE
         if (healthSystem.GetHealth() <= 0)
         {
             SoundManager.Instance.PlaySound(deathSound);
+            CheckIfDroppingPickup(transform);
             Destroy(gameObject);
             GameManager.Instance.AddPoint(5);
             GameManager.Instance.EnemiesDefeatedCount++;
             GameManager.Instance.EnemiesDefeatedInRoom++;
+
+            // Attempt to drop pickup
 
             if (GameManager.Instance.EnemiesDefeatedCount >= GameManager.Instance.TotalEnemies)
             {
@@ -45,6 +53,28 @@ public class EnemyController : Starship // INHERITANCE
             }
         }
     }
+    private void CheckIfDroppingPickup(Transform transform)
+    {
+        int rollDice;
+        rollDice = Random.Range(0, 100);
+        if (rollDice < 10)
+        {
+            Debug.Log("Dropped HP!");
+            starshipAudio.PlayOneShot(dropPickupSound, 0.1f);
+            // drop health
+            // Instantiate(healthPickupPrefab, transform);
+            Instantiate(healthPickupPrefab, transform.position, transform.rotation);
+        }
+        else if (rollDice < 20)
+        {
+            Debug.Log("Dropped missile!");
+            starshipAudio.PlayOneShot(dropPickupSound, 0.1f);
+            // Instantiate(missilePickupPrefab, transform);
+            Instantiate(missilePickupPrefab, transform.position, transform.rotation);
+            // drop missile
+        }
+    }
+
     protected override Vector3 GetLookDirection() // sets look direction towards player's position
     {
         Vector3 lookDirection = (playerPosition.position - transform.position).normalized;

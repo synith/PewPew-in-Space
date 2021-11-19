@@ -13,6 +13,7 @@ public class PlayerController : Starship // INHERITANCE
     private bool isMissileReady = true;
     private bool isMissileArmed = false;
     [SerializeField] private int missileCount = 3;
+    [SerializeField] private int healthPickupHealAmount = 20;
 
     [SerializeField] private AudioClip noAmmoSound;
     [SerializeField] private AudioClip errorSound;
@@ -188,7 +189,7 @@ public class PlayerController : Starship // INHERITANCE
         {
             Destroy(other.gameObject);
             starshipAudio.PlayOneShot(pickupSound, 0.1f);
-            healthSystem.Heal(30);
+            healthSystem.Heal(healthPickupHealAmount);
         }
         else if (other.CompareTag("Pickup_Missile"))
         {
