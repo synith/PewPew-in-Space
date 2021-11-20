@@ -24,6 +24,16 @@ public class EnemyController : Starship // INHERITANCE
         base.Start(); // POLYMORPHISM
         InvokeRepeating(nameof(CheckDistance), checkDistanceSeconds, checkDistanceSeconds);
         InvokeRepeating(nameof(ShootLaser), 0.5f, 0.5f);
+        PickStartDirection();
+    }
+    private void PickStartDirection()
+    {
+        int dice;
+        dice = Random.Range(0, 2);
+        if (dice > 0)
+            goRight = true;
+        else
+            goRight = false;
     }
     protected override void MoveShip()
     {
@@ -69,6 +79,7 @@ public class EnemyController : Starship // INHERITANCE
         {
             Debug.Log("Dropped HP!");
             starshipAudio.PlayOneShot(dropPickupSound, 0.1f);
+            SoundManager.Instance.PlaySound(dropPickupSound);
             // drop health
             // Instantiate(healthPickupPrefab, transform);
             Instantiate(healthPickupPrefab, transform.position, missilePickupPrefab.transform.rotation);
@@ -77,6 +88,7 @@ public class EnemyController : Starship // INHERITANCE
         {
             Debug.Log("Dropped missile!");
             starshipAudio.PlayOneShot(dropPickupSound, 0.1f);
+            SoundManager.Instance.PlaySound(dropPickupSound);
             // Instantiate(missilePickupPrefab, transform);
             Instantiate(missilePickupPrefab, transform.position, missilePickupPrefab.transform.rotation);
             // drop missile
