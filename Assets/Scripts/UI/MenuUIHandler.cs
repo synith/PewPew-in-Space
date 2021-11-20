@@ -39,15 +39,15 @@ public class MenuUIHandler : MonoBehaviour
         uiShake = GetComponent<UIShake>();
         playFabManager = ScoreManager.Instance.GetComponent<PlayFabManager>();
 
-        musicSlider.value = SoundManager.Instance.musicVolume;
-        sfxSlider.value = SoundManager.Instance.sfxVolume;
-
-        menuVolume = SoundManager.Instance.sfxVolume;
         inputName.characterLimit = 10;
         inputName.characterValidation = TMP_InputField.CharacterValidation.Name;
     }
     private void Start()
     {
+        musicSlider.value = SoundManager.Instance.musicVolume;
+        sfxSlider.value = SoundManager.Instance.sfxVolume;
+
+        menuVolume = SoundManager.Instance.sfxVolume;
         StartCoroutine(SetPlayerNameToDisplayName());
     }
 
@@ -104,12 +104,12 @@ public class MenuUIHandler : MonoBehaviour
         else
             window.SetActive(true);
     }
-    public void UpdateVolume()
-    {
-        SoundManager.Instance.musicVolume = musicSlider.value;
+    public void UpdateSFXVolume()
+    {        
         SoundManager.Instance.sfxVolume = sfxSlider.value;
         menuVolume = sfxSlider.value;
     }
+    public void UpdateMusicVolume() => SoundManager.Instance.musicVolume = musicSlider.value;
     public void ExitGame() // exit button - saves high score and closes application
     {
         PlaySound(menuSound);
