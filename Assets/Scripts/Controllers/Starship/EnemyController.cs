@@ -6,6 +6,7 @@ public class EnemyController : Starship // INHERITANCE
     private bool isTooClose;
     private bool goRight;
     private bool hasHitWall;
+    private bool isDead;
     private readonly float minRange = 120;
     private readonly float closeRange = 40;
 
@@ -31,16 +32,12 @@ public class EnemyController : Starship // INHERITANCE
     }
     protected override void CheckDeath() // when enemy dies, destroy object and add points to score
     {
-        if (healthSystem.GetHealth() <= 0)
+        if (healthSystem.GetHealth() <= 0 && !isDead)
         {
-            SoundManager.Instance.PlaySound(deathSound);
+            isDead = true;
             CheckIfDroppingPickup(transform);
-            Destroy(gameObject);
-            GameManager.Instance.AddPoint(5);
-            GameManager.Instance.EnemiesDefeatedCount++;
-            GameManager.Instance.EnemiesDefeatedInRoom++;
-
-            // Attempt to drop pickup
+            EnemyDies();            
+            CountEnemiesDeath();
 
             if (GameManager.Instance.EnemiesDefeatedCount >= GameManager.Instance.TotalEnemies)
             {
@@ -53,6 +50,17 @@ public class EnemyController : Starship // INHERITANCE
             }
         }
     }
+    private void EnemyDies()
+    {
+        Destroy(gameObject);
+        SoundManager.Instance.PlaySound(deathSound);        
+        GameManager.Instance.AddPoint(5);
+    }
+    private void CountEnemiesDeath()
+    {
+        GameManager.Instance.EnemiesDefeatedCount++;
+        GameManager.Instance.EnemiesDefeatedInRoom++;
+    }
     private void CheckIfDroppingPickup(Transform transform)
     {
         int rollDice;
@@ -63,18 +71,17 @@ public class EnemyController : Starship // INHERITANCE
             starshipAudio.PlayOneShot(dropPickupSound, 0.1f);
             // drop health
             // Instantiate(healthPickupPrefab, transform);
-            Instantiate(healthPickupPrefab, transform.position, transform.rotation);
+            Instantiate(healthPickupPrefab, transform.position, missilePickupPrefab.transform.rotation);
         }
         else if (rollDice < 20)
         {
             Debug.Log("Dropped missile!");
             starshipAudio.PlayOneShot(dropPickupSound, 0.1f);
             // Instantiate(missilePickupPrefab, transform);
-            Instantiate(missilePickupPrefab, transform.position, transform.rotation);
+            Instantiate(missilePickupPrefab, transform.position, missilePickupPrefab.transform.rotation);
             // drop missile
         }
     }
-
     protected override Vector3 GetLookDirection() // sets look direction towards player's position
     {
         Vector3 lookDirection = (playerPosition.position - transform.position).normalized;
