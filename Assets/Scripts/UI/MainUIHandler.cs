@@ -23,6 +23,7 @@ public class MainUIHandler : MonoBehaviour
     }
     private void Start() // on game start set pause and game over screens / gamestates to false
     {
+        Time.timeScale = 1;
         PauseScreen.SetActive(false);
         GameOverScreen.SetActive(false);
         GameManager.Instance.GamePaused = false;
@@ -76,7 +77,7 @@ public class MainUIHandler : MonoBehaviour
     }
     public void RestartGame() // restart button - reload current scene
     {
-        ResumeGame();
+        ResumeGame();        
         SceneManager.LoadScene(1);
     }
 
