@@ -43,6 +43,8 @@ public class MenuUIHandler : MonoBehaviour
         sfxSlider.value = SoundManager.Instance.sfxVolume;
 
         menuVolume = SoundManager.Instance.sfxVolume;
+        inputName.characterLimit = 10;
+        inputName.characterValidation = TMP_InputField.CharacterValidation.Name;
     }
     private void Start()
     {
