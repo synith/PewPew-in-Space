@@ -12,7 +12,9 @@ public class PlayerController : Starship // INHERITANCE
     [SerializeField] private float missileCoolDown = 2f;
     private bool isMissileReady = true;
     private bool isMissileArmed = false;
+    private bool isLaserReady = true;
     [SerializeField] private int missileCount = 3;
+    [SerializeField] private float laserCoolDownSeconds = 0.2f;
     [SerializeField] private int healthPickupHealAmount = 20;
 
     [SerializeField] private AudioClip noAmmoSound;
@@ -54,8 +56,17 @@ public class PlayerController : Starship // INHERITANCE
     }
     private void OnShootLaser() // shoots a pooled laser when shoot laser key is pressed
     {
-        if (!GameManager.Instance.GamePaused && !isShieldActive)
+        if (!GameManager.Instance.GamePaused && !isShieldActive && isLaserReady)
+        {
             ShootPooledLaser();
+            isLaserReady = false;
+            StartCoroutine(nameof(LaserCoolDown));
+        }
+    }
+    private IEnumerator LaserCoolDown()
+    {
+        yield return new WaitForSeconds(laserCoolDownSeconds);
+        isLaserReady = true;
     }
     private void OnShootMissile() // shoots a missile when shoot missile key is pressed
     {
