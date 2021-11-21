@@ -242,7 +242,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _missileDamage: 40
-  flySpeed: 110
+  flySpeed: 160
   turnSpeed: 10
   missileLifeTimer: 3
   fireSound: {fileID: 8300000, guid: 110199d89f52a5548b9995447ce9546b, type: 3}
