@@ -83,4 +83,8 @@ public class Shield : MonoBehaviour
             starship.shieldDown = false;
         }            
     }
+    public HealthSystem GetHealthSystem()
+    {
+        return healthSystem;
+    }
 }
