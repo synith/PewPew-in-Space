@@ -175,6 +175,8 @@ public class PlayerController : Starship // INHERITANCE
         if (healthSystem.GetHealth() <= 0)
         {
             SoundManager.Instance.PlaySound(deathSound);
+            GameObject deathParticleInstance = Instantiate(deathParticle, transform.position, transform.rotation);
+            Destroy(deathParticleInstance, 2f);
             gameObject.SetActive(false);
             GameManager.Instance.GameOver = true;
         }
@@ -184,15 +186,24 @@ public class PlayerController : Starship // INHERITANCE
         if (other.CompareTag("Laser") && gameObject.CompareTag("Player")) // if player hit by laser with no shield, then do laser damage
         {
             starshipAudio.PlayOneShot(hullHitSound, 0.1f);
+            vfxTransform.localPosition = transform.InverseTransformPoint(other.transform.position);
+            vfxTransform.localPosition = new Vector3(vfxTransform.localPosition.x, vfxTransform.localPosition.y + 5, vfxTransform.localPosition.z);
+            laserHullParticle.Play();
             LaserHit(other);
         }
         else if (other.CompareTag("Missile") && gameObject.CompareTag("Player") && isMissileArmed)
         {
             starshipAudio.PlayOneShot(missileHitSound, 0.1f);
+            vfxTransform.localPosition = transform.InverseTransformPoint(other.transform.position);
+            vfxTransform.localPosition = new Vector3(vfxTransform.localPosition.x, vfxTransform.localPosition.y + 5, vfxTransform.localPosition.z);
+            missileHullParticle.Play();
             MissileHit(other);
         }
         else if (other.CompareTag("Laser") && gameObject.CompareTag("Shield")) // if shield up, simply return the laser to the pool
         {
+            vfxTransform.localPosition = transform.InverseTransformPoint(other.transform.position);
+            vfxTransform.localPosition = new Vector3(vfxTransform.localPosition.x, vfxTransform.localPosition.y + 5, vfxTransform.localPosition.z);
+            laserShieldParticle.Play();
             ReturnToPool(other);
             // do damage to shield
         }
