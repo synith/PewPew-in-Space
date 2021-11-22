@@ -64,10 +64,16 @@ public class Shield : MonoBehaviour
     {
         if (healthSystem.GetHealth() <= 0)
         {
-            shieldAudioSource.PlayOneShot(shieldDownClip, 0.1f);
-            starship.shieldDown = true;            
-            starship.gameObject.tag = "Player";
-            StartCoroutine(nameof(ShieldRegen));
+            if (starship.shieldDown)
+            {
+                starship.gameObject.tag = "Player";
+            }
+            else
+            {
+                shieldAudioSource.PlayOneShot(shieldDownClip, 0.1f);
+                StartCoroutine(nameof(ShieldRegen));
+                starship.shieldDown = true;
+            }
         }
     }
     public IEnumerator ShieldRegen() // after a set amount of time heal the shield to full, set the shield as up and tag the player so the shield blocks lasers for them

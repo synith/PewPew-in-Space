@@ -23,6 +23,13 @@ public abstract class Starship : MonoBehaviour
     protected bool isShieldActive;
     public bool shieldDown;
 
+    [SerializeField] protected ParticleSystem laserHullParticle;
+    [SerializeField] protected ParticleSystem laserShieldParticle;
+    [SerializeField] protected ParticleSystem missileHullParticle;
+    [SerializeField] protected GameObject deathParticle;
+
+    [SerializeField] protected Transform vfxTransform;
+
     [SerializeField] protected AudioClip hullHitSound;
     [SerializeField] protected AudioClip missileHitSound;
     [SerializeField] protected AudioClip deathSound;
@@ -90,12 +97,18 @@ public abstract class Starship : MonoBehaviour
         if (other.CompareTag("Laser"))
         {
             starshipAudio.PlayOneShot(hullHitSound, 0.1f);
+            vfxTransform.localPosition = transform.InverseTransformPoint(other.transform.position);
+            vfxTransform.localPosition = new Vector3(vfxTransform.localPosition.x, vfxTransform.localPosition.y + 5, vfxTransform.localPosition.z);
+            laserHullParticle.Play();
             LaserHit(other);
             
         }
         else if (other.CompareTag("Missile"))
         {
             starshipAudio.PlayOneShot(missileHitSound, 0.1f);
+            vfxTransform.localPosition = transform.InverseTransformPoint(other.transform.position);
+            vfxTransform.localPosition = new Vector3(vfxTransform.localPosition.x, vfxTransform.localPosition.y + 5, vfxTransform.localPosition.z);
+            missileHullParticle.Play();
             MissileHit(other);            
         }
     }

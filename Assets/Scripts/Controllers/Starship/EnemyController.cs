@@ -62,6 +62,8 @@ public class EnemyController : Starship // INHERITANCE
     }
     private void EnemyDies()
     {
+        GameObject deathParticleInstance = Instantiate(deathParticle, transform.position, transform.rotation);
+        Destroy(deathParticleInstance, 2f);
         Destroy(gameObject);
         SoundManager.Instance.PlaySound(deathSound);        
         GameManager.Instance.AddPoint(5);
@@ -80,8 +82,6 @@ public class EnemyController : Starship // INHERITANCE
             Debug.Log("Dropped HP!");
             starshipAudio.PlayOneShot(dropPickupSound, 0.1f);
             SoundManager.Instance.PlaySound(dropPickupSound);
-            // drop health
-            // Instantiate(healthPickupPrefab, transform);
             Instantiate(healthPickupPrefab, transform.position, missilePickupPrefab.transform.rotation);
         }
         else if (rollDice < 20)
@@ -89,9 +89,7 @@ public class EnemyController : Starship // INHERITANCE
             Debug.Log("Dropped missile!");
             starshipAudio.PlayOneShot(dropPickupSound, 0.1f);
             SoundManager.Instance.PlaySound(dropPickupSound);
-            // Instantiate(missilePickupPrefab, transform);
             Instantiate(missilePickupPrefab, transform.position, missilePickupPrefab.transform.rotation);
-            // drop missile
         }
     }
     protected override Vector3 GetLookDirection() // sets look direction towards player's position
