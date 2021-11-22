@@ -46,7 +46,10 @@ public class PlayerController : Starship // INHERITANCE
         {
             isShieldActive = true;
             gameObject.tag = "Shield";
-            StartCoroutine(shield.GetComponent<Shield>().ShieldRegen());
+            if (shieldDown)
+            {
+                StartCoroutine(shield.GetComponent<Shield>().ShieldRegen());
+            }            
         }
         else
         {
