@@ -92,13 +92,17 @@ public abstract class Starship : MonoBehaviour
     {
         if (healthSystem.GetHealth() <= 0) Destroy(gameObject);
     }
+    protected void vfxTransformToHitLocation(Collider other)
+    {
+        vfxTransform.localPosition = transform.InverseTransformPoint(other.transform.position);
+        vfxTransform.localPosition = new Vector3(vfxTransform.localPosition.x, vfxTransform.localPosition.y + 5, vfxTransform.localPosition.z);
+    }
     protected virtual void OnTriggerEnter(Collider other) // checks to see if laser or missile hit starship
     {
         if (other.CompareTag("Laser"))
         {
             starshipAudio.PlayOneShot(hullHitSound, 0.1f);
-            vfxTransform.localPosition = transform.InverseTransformPoint(other.transform.position);
-            vfxTransform.localPosition = new Vector3(vfxTransform.localPosition.x, vfxTransform.localPosition.y + 5, vfxTransform.localPosition.z);
+            vfxTransformToHitLocation(other);
             laserHullParticle.Play();
             LaserHit(other);
             
@@ -106,8 +110,7 @@ public abstract class Starship : MonoBehaviour
         else if (other.CompareTag("Missile"))
         {
             starshipAudio.PlayOneShot(missileHitSound, 0.1f);
-            vfxTransform.localPosition = transform.InverseTransformPoint(other.transform.position);
-            vfxTransform.localPosition = new Vector3(vfxTransform.localPosition.x, vfxTransform.localPosition.y + 5, vfxTransform.localPosition.z);
+            vfxTransformToHitLocation(other);
             missileHullParticle.Play();
             MissileHit(other);            
         }
