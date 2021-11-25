@@ -43,7 +43,7 @@ public class SpawnManager : MonoBehaviour
     }
     private void Start()
     {
-        SpawnFighter(0); // spawns enemies in first room on game start
+        SpawnFighterInRoom(0); // spawns enemies in first room on game start
         CountAllEnemies();
         CloseAllDoors();
     }
@@ -62,7 +62,7 @@ public class SpawnManager : MonoBehaviour
             item.SetActive(true);
         }
     }
-    public void SpawnFighter(int roomIndex) // spawns enemies in specified room
+    public void SpawnFighterInRoom(int roomIndex) // spawns enemies in specified room
     {
         Transform[] room = Rooms[roomIndex];
         foreach (Transform pos in room)
@@ -80,5 +80,5 @@ public class SpawnManager : MonoBehaviour
         {
             GameManager.Instance.TotalEnemies += transforms.Length;
         }
-    }
+    }   
 }
