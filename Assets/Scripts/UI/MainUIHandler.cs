@@ -80,7 +80,14 @@ public class MainUIHandler : MonoBehaviour
         ResumeGame();        
         SceneManager.LoadScene(1);
     }
-
+    public void ContinueButton() => ActivateEndlessMode();
+    private void ActivateEndlessMode()
+    {
+        GameManager.Instance.GameWon = false;
+        GameWonScreen.SetActive(false);
+        Time.timeScale = 1;
+        GameManager.Instance.SpawnEndlessMode();
+    }
     public void StartGame() // start button
     {
         // code to close Start UI window after showing player controls and intro message (this might help with abrupt start and room 0 spawns)

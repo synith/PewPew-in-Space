@@ -11,18 +11,21 @@ public class GameManager : MonoBehaviour
 
     // ENCAPSULATION
     public static GameManager Instance { get; private set; }
-    public SpawnManager SpawnManager { get; private set; }    
+    public SpawnManager SpawnManager { get; private set; }
 
     // ENCAPSULATION
     public bool GameStarted { get; set; }
     public bool GamePaused { get; set; }
     public bool GameOver { get; set; }
     public bool GameWon { get; set; }
+    public bool EndlessMode { get; set; }
 
     public int EnemiesDefeatedCount { get; set; }
     public int TotalEnemies { get; internal set; }
     public int EnemiesDefeatedInRoom { get; set; }
     public int TotalEnemiesInRoom { get; set; }
+    public int EndlessEnemiesDefeated { get; set; }
+    public int TotalEndlessEnemies { get; set; }
 
     // text boxes during gameplay
     [SerializeField] private TextMeshProUGUI scoreText;
@@ -111,9 +114,33 @@ public class GameManager : MonoBehaviour
             return score;
         }
     }
-
     public void SetMissileCountText(int missileCount)
     {
         missileCountText.text = "x " + missileCount;
+    }
+    public void SpawnEndlessMode()
+    {
+        if (!EndlessMode)
+            EndlessMode = true;
+
+        EndlessEnemiesDefeated = 0;
+        TotalEndlessEnemies = SpawnManager.EnemyTotalCountInRoom(4);
+        SpawnManager.SpawnFighterInRoom(4);
+    }
+    public void CountEnemiesDeath()
+    {
+        if (!EndlessMode)
+        {
+            EnemiesDefeatedCount++;
+            EnemiesDefeatedInRoom++;
+        }        
+        else if (EndlessMode)
+        {
+            EndlessEnemiesDefeated++;
+            if (EndlessEnemiesDefeated >= TotalEndlessEnemies)
+            {
+                SpawnEndlessMode();
+            }
+        }
     }
 }

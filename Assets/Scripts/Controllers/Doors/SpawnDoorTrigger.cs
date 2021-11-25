@@ -36,7 +36,7 @@ public class SpawnDoorTrigger : MonoBehaviour
     private void OpenNextRoom(int room)
     {
         CloseDoorBehindPlayer(room);
-        spawnManager.SpawnFighter(room);
+        spawnManager.SpawnFighterInRoom(room);
         CountEnemiesInRoom(room);
         spawnManager.CurrentRoomNumber = room;
         GameManager.Instance.EnemiesDefeatedInRoom = 0;

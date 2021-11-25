@@ -47,11 +47,14 @@ public class EnemyController : Starship // INHERITANCE
             isDead = true;
             CheckIfDroppingPickup(transform);
             EnemyDies();            
-            CountEnemiesDeath();
+            GameManager.Instance.CountEnemiesDeath();
 
             if (GameManager.Instance.EnemiesDefeatedCount >= GameManager.Instance.TotalEnemies)
             {
-                GameManager.Instance.GameWon = true;
+                if (!GameManager.Instance.EndlessMode)
+                {
+                    GameManager.Instance.GameWon = true;
+                }
             }
             if (GameManager.Instance.EnemiesDefeatedInRoom >= GameManager.Instance.TotalEnemiesInRoom)
             {
@@ -67,11 +70,6 @@ public class EnemyController : Starship // INHERITANCE
         Destroy(gameObject);
         SoundManager.Instance.PlaySound(deathSound);        
         GameManager.Instance.AddPoint(5);
-    }
-    private void CountEnemiesDeath()
-    {
-        GameManager.Instance.EnemiesDefeatedCount++;
-        GameManager.Instance.EnemiesDefeatedInRoom++;
     }
     private void CheckIfDroppingPickup(Transform transform)
     {
