@@ -18,7 +18,7 @@ public class EnemyController : Starship // INHERITANCE
     {
         base.Awake(); // POLYMORPHISM
         playerPosition = FindObjectOfType<PlayerController>().transform;
-    }    
+    }
     protected override void Start() // start repeatedly checking distance to player and shooting at player
     {
         base.Start(); // POLYMORPHISM
@@ -46,7 +46,7 @@ public class EnemyController : Starship // INHERITANCE
         {
             isDead = true;
             CheckIfDroppingPickup(transform);
-            EnemyDies();            
+            EnemyDies();
             GameManager.Instance.CountEnemiesDeath();
 
             if (GameManager.Instance.EnemiesDefeatedCount >= GameManager.Instance.TotalEnemies)
@@ -68,7 +68,7 @@ public class EnemyController : Starship // INHERITANCE
         GameObject deathParticleInstance = Instantiate(deathParticle, transform.position, transform.rotation);
         Destroy(deathParticleInstance, 2f);
         Destroy(gameObject);
-        SoundManager.Instance.PlaySound(deathSound);        
+        SoundManager.Instance.PlaySound(deathSound);
         GameManager.Instance.AddPoint(5);
     }
     private void CheckIfDroppingPickup(Transform transform)
@@ -77,24 +77,25 @@ public class EnemyController : Starship // INHERITANCE
         rollDice = Random.Range(0, 100);
         if (rollDice < 10)
         {
-            Debug.Log("Dropped HP!");
-            starshipAudio.PlayOneShot(dropPickupSound, 0.1f);
-            SoundManager.Instance.PlaySound(dropPickupSound);
-            Instantiate(healthPickupPrefab, transform.position, missilePickupPrefab.transform.rotation);
+            DropPickup(healthPickupPrefab, "Hp Drop!", transform);
         }
         else if (rollDice < 20)
         {
-            Debug.Log("Dropped missile!");
-            starshipAudio.PlayOneShot(dropPickupSound, 0.1f);
-            SoundManager.Instance.PlaySound(dropPickupSound);
-            Instantiate(missilePickupPrefab, transform.position, missilePickupPrefab.transform.rotation);
+            DropPickup(missilePickupPrefab, "Missile Drop!", transform);
         }
+    }
+    private void DropPickup(GameObject pickup, string pickupStatusText, Transform transform)
+    {
+        GameManager.Instance.ShowStatus(pickupStatusText);
+        starshipAudio.PlayOneShot(dropPickupSound, 0.1f);
+        SoundManager.Instance.PlaySound(dropPickupSound);
+        Instantiate(pickup, transform.position, missilePickupPrefab.transform.rotation);
     }
     protected override Vector3 GetLookDirection() // sets look direction towards player's position
     {
         Vector3 lookDirection = (playerPosition.position - transform.position).normalized;
         return lookDirection;
-    }   
+    }
     private void CheckDistance() // checks distance from player to determine range states
     {
         float dist = Vector3.Distance(playerPosition.position, transform.position);
@@ -103,7 +104,7 @@ public class EnemyController : Starship // INHERITANCE
             isInRange = true;
         else
             isInRange = false;
-        if (dist < closeRange) 
+        if (dist < closeRange)
             isTooClose = true;
         else
             isTooClose = false;
@@ -112,18 +113,24 @@ public class EnemyController : Starship // INHERITANCE
     {
         if (isInRange && !GameManager.Instance.GameOver)
             ShootPooledLaser();
-    }    
+    }
     private void SetDirection() // sets enemy direction based on distance to player
     {
-        if (!isInRange) moveDirection = Vector3.forward;     // if not in range move forward
-        else if (isTooClose) moveDirection = Vector3.back;   // if too close then move back     
-        else moveDirection = GetStrafeDirection();           // if in range and not too close then strafe
+        if (!isInRange)
+            moveDirection = Vector3.forward;
+        else if (isTooClose)
+            moveDirection = Vector3.back;    
+        else
+            moveDirection = GetStrafeDirection();
     }
     private Vector3 GetStrafeDirection()
     {
         Vector3 strafeDirection;
-        if (goRight) strafeDirection = Vector3.right;
-        else strafeDirection = Vector3.left;
+        if (goRight)
+            strafeDirection = Vector3.right;
+        else
+            strafeDirection = Vector3.left;
+
         return strafeDirection;
     }
     private void ChangeStrafeDirection()
