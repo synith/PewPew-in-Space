@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RotateMissile : MonoBehaviour
+public class RotatePickup : MonoBehaviour
 {
     [SerializeField] private float rotationSpeed = 10f;
     private void Update()
