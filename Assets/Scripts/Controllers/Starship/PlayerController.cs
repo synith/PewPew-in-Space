@@ -114,14 +114,16 @@ public class PlayerController : Starship // INHERITANCE
         isMissileArmed = false;
         StartCoroutine(nameof(MissileArmed));
 
-        GameManager.Instance.ShowStatus("Missiles Left:" + missileCount); // updates status text with remaining missile count
-        GameObject tempMissile;
-        tempMissile = Instantiate(missilePrefab, shootPoint.position, transform.rotation);
-        tempMissile.GetComponent<HomingMissile>().Fire(target);
-
+        SpawnAndFireMissileAtTarget(target);
 
         isMissileReady = false;
         StartCoroutine(nameof(MissileCoolDown)); // starts missile cooldown preventing missile from being fired again until after cooldown
+    }
+
+    private void SpawnAndFireMissileAtTarget(Transform target)
+    {
+        GameObject tempMissile = Instantiate(missilePrefab, shootPoint.position, transform.rotation);
+        tempMissile.GetComponent<HomingMissile>().Fire(target);
     }
 
     private void TargetNotInRange()
@@ -177,13 +179,19 @@ public class PlayerController : Starship // INHERITANCE
     {
         if (healthSystem.GetHealth() <= 0)
         {
-            SoundManager.Instance.PlaySound(deathSound);
-            GameObject deathParticleInstance = Instantiate(deathParticle, transform.position, transform.rotation);
-            Destroy(deathParticleInstance, 2f);
-            gameObject.SetActive(false);
-            GameManager.Instance.GameOver = true;
+            PlayerDies();
         }
     }
+
+    private void PlayerDies()
+    {
+        SoundManager.Instance.PlaySound(deathSound);
+        GameObject deathParticleInstance = Instantiate(deathParticle, transform.position, transform.rotation);
+        Destroy(deathParticleInstance, 2f);
+        gameObject.SetActive(false);
+        GameManager.Instance.GameOver = true;
+    }
+
     protected override void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Laser") && gameObject.CompareTag("Player")) // if player hit by laser with no shield, then do laser damage
@@ -205,7 +213,6 @@ public class PlayerController : Starship // INHERITANCE
             vfxTransformToHitLocation(other);
             laserShieldParticle.Play();
             ReturnToPool(other);
-            // do damage to shield
         }
         else if (other.CompareTag("Pickup_Health"))
         {
