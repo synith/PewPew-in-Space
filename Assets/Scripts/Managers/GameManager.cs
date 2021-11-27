@@ -67,6 +67,37 @@ public class GameManager : MonoBehaviour
         scoreText.text = SetScore();
         CheckHighScore();
     }
+    public void SetMissileCountText(int missileCount)
+    {
+        missileCountText.text = "x " + missileCount;
+    }
+    public void SpawnEndlessMode()
+    {
+        int endlessRoom = 4;
+
+        if (!EndlessMode)
+            EndlessMode = true;
+
+        EndlessEnemiesDefeated = 0;
+        TotalEndlessEnemies = SpawnManager.EnemyTotalCountInRoom(endlessRoom);
+        SpawnManager.SpawnFighterInRoom(endlessRoom);
+    }
+    public void CountEnemiesDeath()
+    {
+        if (!EndlessMode)
+        {
+            EnemiesDefeatedCount++;
+            EnemiesDefeatedInRoom++;
+        }
+        else if (EndlessMode)
+        {
+            EndlessEnemiesDefeated++;
+            if (EndlessEnemiesDefeated >= TotalEndlessEnemies)
+            {
+                SpawnEndlessMode();
+            }
+        }
+    }
     private IEnumerator StatusCooldown() // 4 second cooldown on status text before dissapearing
     {
         yield return new WaitForSeconds(4);
@@ -114,33 +145,5 @@ public class GameManager : MonoBehaviour
             return score;
         }
     }
-    public void SetMissileCountText(int missileCount)
-    {
-        missileCountText.text = "x " + missileCount;
-    }
-    public void SpawnEndlessMode()
-    {
-        if (!EndlessMode)
-            EndlessMode = true;
 
-        EndlessEnemiesDefeated = 0;
-        TotalEndlessEnemies = SpawnManager.EnemyTotalCountInRoom(4);
-        SpawnManager.SpawnFighterInRoom(4);
-    }
-    public void CountEnemiesDeath()
-    {
-        if (!EndlessMode)
-        {
-            EnemiesDefeatedCount++;
-            EnemiesDefeatedInRoom++;
-        }        
-        else if (EndlessMode)
-        {
-            EndlessEnemiesDefeated++;
-            if (EndlessEnemiesDefeated >= TotalEndlessEnemies)
-            {
-                SpawnEndlessMode();
-            }
-        }
-    }
 }
