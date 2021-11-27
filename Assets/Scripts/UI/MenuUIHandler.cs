@@ -29,14 +29,14 @@ public class MenuUIHandler : MonoBehaviour
 
     private PlayFabManager playFabManager;
     private AudioSource menuAudio;
-    private UIShake uiShake;
+    private UIShaker uiShaker;
     private float menuVolume;
 
     private void Awake() // sets highscore text box to highscore from score manager
     {
         highScoreText.text = $"Your Best Score: {ScoreManager.Instance.HighScore}";
         menuAudio = GetComponent<AudioSource>();
-        uiShake = GetComponent<UIShake>();
+        uiShaker = GetComponent<UIShaker>();
         playFabManager = ScoreManager.Instance.GetComponent<PlayFabManager>();
 
         inputName.characterLimit = 10;
@@ -75,7 +75,7 @@ public class MenuUIHandler : MonoBehaviour
         if (string.IsNullOrEmpty(ScoreManager.Instance.PlayerName))
         {
             PlaySound(errorSound);
-            uiShake.ShakeUI(enterNameObject);
+            uiShaker.ShakeUI(enterNameObject);
             return;
         }
         else

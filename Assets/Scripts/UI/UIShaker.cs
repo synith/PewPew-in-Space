@@ -2,7 +2,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
-public class UIShake : MonoBehaviour
+public class UIShaker : MonoBehaviour
 {
     private GameObject objectToShake;
     private bool canShake;
