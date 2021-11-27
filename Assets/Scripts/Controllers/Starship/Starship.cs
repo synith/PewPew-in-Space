@@ -14,14 +14,6 @@ public abstract class Starship : MonoBehaviour
     [SerializeField] protected float rotateSpeed;
 
     [SerializeField] protected int maxHealth;
-    protected HealthSystem healthSystem;
-
-    protected Rigidbody rb;
-    protected Vector3 moveDirection;
-
-    protected bool isInRange;
-    protected bool isShieldActive;
-    public bool shieldDown;
 
     [SerializeField] protected ParticleSystem laserHullParticle;
     [SerializeField] protected ParticleSystem laserShieldParticle;
@@ -33,6 +25,17 @@ public abstract class Starship : MonoBehaviour
     [SerializeField] protected AudioClip hullHitSound;
     [SerializeField] protected AudioClip missileHitSound;
     [SerializeField] protected AudioClip deathSound;
+
+    public bool shieldDown;
+
+    protected HealthSystem healthSystem;
+
+    protected Rigidbody rb;
+    protected Vector3 moveDirection;
+
+    protected bool isInRange;
+    protected bool isShieldActive;
+
     protected AudioSource starshipAudio;
 
     protected virtual void Awake() // on script load initialize health system using starship's max health
@@ -102,18 +105,21 @@ public abstract class Starship : MonoBehaviour
         if (other.CompareTag("Laser"))
         {
             starshipAudio.PlayOneShot(hullHitSound, 0.1f);
-            vfxTransformToHitLocation(other);
-            laserHullParticle.Play();
+            PlayWeaponParticle(other, laserHullParticle);
             LaserHit(other);
-            
+
         }
         else if (other.CompareTag("Missile"))
         {
             starshipAudio.PlayOneShot(missileHitSound, 0.1f);
-            vfxTransformToHitLocation(other);
-            missileHullParticle.Play();
+            PlayWeaponParticle(other, missileHullParticle);
             MissileHit(other);            
         }
+    }
+    protected void PlayWeaponParticle(Collider other, ParticleSystem particle)
+    {
+        vfxTransformToHitLocation(other);
+        particle.Play();
     }
     protected void LaserHit(Collider laser) // does damage to starship's health system based on laser damage
     {

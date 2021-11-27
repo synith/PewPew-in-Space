@@ -10,9 +10,6 @@ public class PlayerController : Starship // INHERITANCE
 {
     [SerializeField] private float missileRange = 100f;
     [SerializeField] private float missileCoolDown = 2f;
-    private bool isMissileReady = true;
-    private bool isMissileArmed = false;
-    private bool isLaserReady = true;
     [SerializeField] private int missileCount = 3;
     [SerializeField] private float laserCoolDownSeconds = 0.2f;
     [SerializeField] private int healthPickupHealAmount = 20;
@@ -21,12 +18,17 @@ public class PlayerController : Starship // INHERITANCE
     [SerializeField] private AudioClip errorSound;
     [SerializeField] private AudioClip pickupSound;
 
+
+    private bool isMissileReady = true;
+    private bool isMissileArmed = false;
+    private bool isLaserReady = true;
+
     protected override void Start()
     {
         base.Start();
         GameManager.Instance.SetMissileCountText(missileCount);
     }
-
+    public HealthSystem GetHealthSystem() => healthSystem;
     private void OnPause() // if pause key is pressed sets game state to paused
     {
         GameManager.Instance.GamePaused = true;
@@ -91,7 +93,6 @@ public class PlayerController : Starship // INHERITANCE
             }
         }
     }
-
     private void FireMissileAtTarget()
     {
         Transform target = GetClosestEnemy();
@@ -105,7 +106,6 @@ public class PlayerController : Starship // INHERITANCE
             TargetNotInRange();
         }
     }
-
     private void FireMissile(Transform target)
     {
         missileCount--;
@@ -119,20 +119,17 @@ public class PlayerController : Starship // INHERITANCE
         isMissileReady = false;
         StartCoroutine(nameof(MissileCoolDown)); // starts missile cooldown preventing missile from being fired again until after cooldown
     }
-
     private void SpawnAndFireMissileAtTarget(Transform target)
     {
         GameObject tempMissile = Instantiate(missilePrefab, shootPoint.position, transform.rotation);
         tempMissile.GetComponent<HomingMissile>().Fire(target);
     }
-
     private void TargetNotInRange()
     {
         GameManager.Instance.ShowStatus("No Target in Range"); // updates status text informing player there is no target in range
                                                                // play sad sound
         starshipAudio.PlayOneShot(errorSound, 0.1f);
     }
-
     private Transform GetClosestEnemy() // creates an array of objects that have the enemy tag and compares their distance to see which is closest, returns this enemy as the closest target
     {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
@@ -182,7 +179,6 @@ public class PlayerController : Starship // INHERITANCE
             PlayerDies();
         }
     }
-
     private void PlayerDies()
     {
         SoundManager.Instance.PlaySound(deathSound);
@@ -191,27 +187,23 @@ public class PlayerController : Starship // INHERITANCE
         gameObject.SetActive(false);
         GameManager.Instance.GameOver = true;
     }
-
     protected override void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Laser") && gameObject.CompareTag("Player")) // if player hit by laser with no shield, then do laser damage
         {
             starshipAudio.PlayOneShot(hullHitSound, 0.1f);
-            vfxTransformToHitLocation(other);
-            laserHullParticle.Play();
+            PlayWeaponParticle(other, laserHullParticle);
             LaserHit(other);
         }
         else if (other.CompareTag("Missile") && gameObject.CompareTag("Player") && isMissileArmed)
         {
             starshipAudio.PlayOneShot(missileHitSound, 0.1f);
-            vfxTransformToHitLocation(other);
-            missileHullParticle.Play();
+            PlayWeaponParticle(other, missileHullParticle);
             MissileHit(other);
         }
         else if (other.CompareTag("Laser") && gameObject.CompareTag("Shield")) // if shield up, simply return the laser to the pool
         {
-            vfxTransformToHitLocation(other);
-            laserShieldParticle.Play();
+            PlayWeaponParticle(other, laserShieldParticle);
             ReturnToPool(other);
         }
         else if (other.CompareTag("Pickup_Health"))
@@ -230,10 +222,5 @@ public class PlayerController : Starship // INHERITANCE
                 GameManager.Instance.SetMissileCountText(missileCount);
             }
         }
-    }
-    public HealthSystem GetHealthSystem()
-    {
-        return healthSystem;
-    }
-    
+    }  
 }

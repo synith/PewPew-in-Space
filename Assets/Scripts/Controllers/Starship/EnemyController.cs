@@ -2,6 +2,10 @@ using UnityEngine;
 public class EnemyController : Starship // INHERITANCE
 {
     [SerializeField] private float checkDistanceSeconds;
+    [SerializeField] private GameObject healthPickupPrefab;
+    [SerializeField] private GameObject missilePickupPrefab;
+    [SerializeField] private AudioClip dropPickupSound;
+
     private Transform playerPosition;
     private bool isTooClose;
     private bool goRight;
@@ -10,9 +14,7 @@ public class EnemyController : Starship // INHERITANCE
     private readonly float minRange = 120;
     private readonly float closeRange = 40;
 
-    [SerializeField] private GameObject healthPickupPrefab;
-    [SerializeField] private GameObject missilePickupPrefab;
-    [SerializeField] private AudioClip dropPickupSound;
+
 
     protected override void Awake() // find player's position on script loading
     {
