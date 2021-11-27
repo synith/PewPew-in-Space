@@ -1,6 +1,9 @@
 using UnityEngine;
 public class EnemyController : Starship // INHERITANCE
 {
+    private const float TOO_FAR_RANGE = 120;
+    private const float TOO_CLOSE_RANGE = 40;
+
     [SerializeField] private float checkDistanceSeconds;
     [SerializeField] private GameObject healthPickupPrefab;
     [SerializeField] private GameObject missilePickupPrefab;
@@ -11,10 +14,6 @@ public class EnemyController : Starship // INHERITANCE
     private bool goRight;
     private bool hasHitWall;
     private bool isDead;
-    private readonly float minRange = 120;
-    private readonly float closeRange = 40;
-
-
 
     protected override void Awake() // find player's position on script loading
     {
@@ -102,11 +101,11 @@ public class EnemyController : Starship // INHERITANCE
     {
         float dist = Vector3.Distance(playerPosition.position, transform.position);
 
-        if (dist < minRange)
+        if (dist < TOO_FAR_RANGE)
             isInRange = true;
         else
             isInRange = false;
-        if (dist < closeRange)
+        if (dist < TOO_CLOSE_RANGE)
             isTooClose = true;
         else
             isTooClose = false;
